@@ -1,0 +1,255 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Ado\\Ado.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Ado\\Ado.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Ado\\Ado.csproj",
+        "projectName": "Ado",
+        "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Ado\\Ado.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Ado\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0-windows"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0-windows7.0": {
+            "targetAlias": "net7.0-windows",
+            "projectReferences": {
+              "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj"
+              },
+              "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0-windows7.0": {
+          "targetAlias": "net7.0-windows",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj",
+        "projectName": "Data",
+        "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.32, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj",
+        "projectName": "Globals",
+        "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj",
+        "projectName": "Logica",
+        "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj",
+        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj"
+              },
+              "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj": {
+                "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
