@@ -49,6 +49,7 @@ namespace Logica {
                     for (; workoutIdx < workouts.Count(); workoutIdx++) {
                         if (workouts[workoutIdx].Id == (int)row["workouts_id"]) {
                             swimmer.addWorkout(workouts[workoutIdx]);
+                            break;
                         }
                     }
                 }
@@ -57,9 +58,9 @@ namespace Logica {
             foreach (Coach coach in coaches) {
                 DataSet ds = this._dl.SelectData($"select * from coaches_has_workouts where coaches_id={coach.Id} order by coaches_id,workouts_id;", "chw");
                 DataTable dt = ds.Tables["chw"];
-                int workoutIdx = 0;
+                //int workoutIdx = 0;
                 foreach (DataRow row in dt.Rows) {
-                    for (; workoutIdx < workouts.Count(); workoutIdx++) {
+                    for (int workoutIdx = 0; workoutIdx < workouts.Count(); workoutIdx++) {
                         if (workouts[workoutIdx].Id == (int)row["workouts_id"]) {
                             coach.addWorkout(workouts[workoutIdx]);
                         }
@@ -74,7 +75,6 @@ namespace Logica {
             List<Coach> result = new List<Coach>();
 
             foreach (DataRow row in dt.Rows) {
-                Console.WriteLine($"{row[0]} {row[1]} {row[2]} {row[3]} {row[4]} {row[5]} ");
                 Enum.TryParse((string)row["level"], out CoachLevel level);
                 result.Add(new Coach(
                     (int)row["id"],

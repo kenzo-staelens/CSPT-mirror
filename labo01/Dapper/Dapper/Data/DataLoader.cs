@@ -23,7 +23,6 @@ namespace Data {
                 IDataReader rdr = conn.ExecuteReader(new CommandDefinition(queryString));
                 return ConvertDataReaderToDataSet(rdr, datasetTableName, dataSet);
             }
-            return null;
         }
 
         public DataSet ConvertDataReaderToDataSet(IDataReader data, string tablename, DataSet ds) {
