@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Data\Data.csproj" />
     <ProjectReference Include="..\Globals\Globals.csproj" />
+    <ProjectReference Include="..\Logica\Logica.csproj" />
   </ItemGroup>
 
 </Project>

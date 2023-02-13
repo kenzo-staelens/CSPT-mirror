@@ -1,4 +1,6 @@
 ﻿using Data;
+using Globals;
+using Logica;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Data.SqlClient;
@@ -6,16 +8,17 @@ using System.Data.SqlClient;
 public class Program {
     private static void Main(string[] args) {
 
-        string beast = "SELECT cid, firstname, lastname, sid, swimmer_firstname, swimmer_lastname FROM (SELECT coaches.member_id as cid,swimmers.member_id as sid,firstname as swimmer_firstname, lastname as swimmer_lastname FROM coaches INNER JOIN coaches_has_workouts ON coaches.id=coaches_id INNER JOIN workouts ON workouts.id=coaches_has_workouts.workouts_id INNER JOIN swimmers_has_workouts ON workouts.id=swimmers_has_workouts.workouts_id INNER JOIN swimmers ON swimmers.id=swimmers_id INNER JOIN members ON members.id=swimmers.member_id) as jtable INNER JOIN members on cid=id;";
-        string mini = "select * from members;";
-        DataLoader dl = new DataLoader("localhost", "test", "root", "Kids2506#");
+        DataPreProcessor dpp = new DataPreProcessor("localhost", "test", "root", "Kids2506#");
+        DataSet ds = new DataSet();
+        List<SwimmingPool> pools = dpp.GetSwimmingPools(ds);
+        List<Swimmer> swimmers = dpp.GetSwimmers(ds);
+        List<Coach> coaches = dpp.GetCoaches(ds);
+        List<Workout> workouts = dpp.GetWorkouts(ds, pools);
+        dpp.SetMemberWorkouts(coaches, swimmers, workouts);
+        dpp.SetWorkoutCoaches(coaches);
 
-        string tablename = "table";
-        DataSet dataSet = dl.SelectData(mini, "table");
-        DataTable table = dataSet.Tables[tablename];
-
-        foreach (DataRow row in table.Rows) {
-            Console.WriteLine($"{row[1]} {row[2]}");
+        foreach(var val in coaches) {
+            Console.WriteLine($"-- {val} --");
         }
     }
 }

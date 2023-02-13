@@ -8,8 +8,8 @@
     ".NETCoreApp,Version=v7.0": {
       "console/1.0.0": {
         "dependencies": {
-          "Data": "1.0.0",
-          "Globals": "1.0.0"
+          "Globals": "1.0.0",
+          "Logica": "1.0.0"
         },
         "runtime": {
           "console.dll": {}
@@ -355,6 +355,15 @@
         "runtime": {
           "Globals.dll": {}
         }
+      },
+      "Logica/1.0.0": {
+        "dependencies": {
+          "Data": "1.0.0",
+          "Globals": "1.0.0"
+        },
+        "runtime": {
+          "Logica.dll": {}
+        }
       }
     }
   },
@@ -601,6 +610,11 @@
       "sha512": ""
     },
     "Globals/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Logica/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

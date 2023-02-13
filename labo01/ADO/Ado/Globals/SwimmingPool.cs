@@ -14,8 +14,13 @@ namespace Globals {
 
         public PoolLaneLength LaneLength { get; }
 
-        public SwimmingPool() {
-
+        public SwimmingPool(int id, string name, string city, string street, int zipcode, PoolLaneLength length) {
+            this.id = id;
+            this.Name = name;
+            this.City = city;
+            this.Street = street;
+            this.ZipCode = zipcode;
+            this.LaneLength = length;
         }
 
         public override string ToString() {

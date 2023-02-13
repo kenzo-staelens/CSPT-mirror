@@ -12,7 +12,13 @@ namespace Globals {
         public string LastName { get; }
         public char Gender { get; }
 
-        public Member() { }
+        public Member(int id, DateTime dateOfBirth, string firstName, string lastName, char gender) {
+            this.Id = id;
+            this.DateOfBirth = dateOfBirth;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Gender = gender;
+        }
 
         public int CompareTo(object? obj) {
             throw new NotImplementedException();
@@ -21,11 +27,6 @@ namespace Globals {
         public bool Equals(Member other) {
             return this.Id == other.Id;
         }
-
-        /* gethashcode is default in object
-        public override int GetHashCode() {
-            return 0;
-        }*/
 
         public override string ToString() {
             return $"{this.FirstName} {this.LastName}";

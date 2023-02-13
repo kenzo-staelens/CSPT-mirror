@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,7 +16,10 @@ namespace Globals {
 
         public int FinalPoints { get; set; }
 
-        public Swimmer() { }
+        public Swimmer(int id, DateTime dateOfBirth, string firstName, string lastName, char gender, int points) : base(id, dateOfBirth, firstName, lastName, gender) {
+            this.workouts = new List<Workout>();
+            this.FinalPoints = points;
+        }
 
         public void addWorkout(Workout workout) {
             this.workouts.Add(workout);

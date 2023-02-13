@@ -555,6 +555,20 @@
         "runtime": {
           "bin/placeholder/Globals.dll": {}
         }
+      },
+      "Logica/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "dependencies": {
+          "Data": "1.0.0",
+          "Globals": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Logica.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Logica.dll": {}
+        }
       }
     }
   },
@@ -1843,12 +1857,17 @@
       "type": "project",
       "path": "../Globals/Globals.csproj",
       "msbuildProject": "../Globals/Globals.csproj"
+    },
+    "Logica/1.0.0": {
+      "type": "project",
+      "path": "../Logica/Logica.csproj",
+      "msbuildProject": "../Logica/Logica.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Data >= 1.0.0",
-      "Globals >= 1.0.0"
+      "Globals >= 1.0.0",
+      "Logica >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1878,11 +1897,11 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj": {
-              "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Data\\Data.csproj"
-            },
             "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj": {
               "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Globals\\Globals.csproj"
+            },
+            "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj": {
+              "projectPath": "C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\labo01\\ADO\\Ado\\Logica\\Logica.csproj"
             }
           }
         }

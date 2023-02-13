@@ -20,9 +20,12 @@ namespace Data {
         }
 
         public DataSet SelectData(string queryString, string datasetTableName) {
-            using(MySqlConnection conn = new MySqlConnection(this._ConnectionString)) {
+            return SelectData(queryString, datasetTableName, new DataSet());
+        }
+
+        public DataSet SelectData(string queryString, string datasetTableName, DataSet dataSet) {
+            using (MySqlConnection conn = new MySqlConnection(this._ConnectionString)) {
                 conn.Open();
-                DataSet dataSet = new DataSet();
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter(queryString, conn);
                 dataAdapter.Fill(dataSet, datasetTableName);
                 return dataSet;
