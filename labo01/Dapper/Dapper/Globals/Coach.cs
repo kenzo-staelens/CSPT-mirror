@@ -18,7 +18,6 @@ namespace Globals {
             : base(id, dateOfBirth, firstName, lastName,gender) {
             this.workouts= new List<Workout>();
             this.Level = level;
-            Console.WriteLine(firstName);
         }
 
         public void addWorkout(Workout workout) {

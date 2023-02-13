@@ -9,14 +9,10 @@ public class Program {
         DataPreProcessor dpp = new DataPreProcessor("localhost", "test", "root", "Kids2506#");
         DataSet ds = new DataSet();
         List<SwimmingPool> pools = dpp.GetSwimmingPools(ds);
-        //List<Swimmer> swimmers = dpp.GetSwimmers(ds);
-        //List<Coach> coaches = dpp.GetCoaches(ds);
-        //List<Workout> workouts = dpp.GetWorkouts(ds, pools);
-        //dpp.SetMemberWorkouts(coaches, swimmers, workouts);
-        //dpp.SetWorkoutCoaches(coaches);
-
-        foreach(var val in pools) {
-            Console.WriteLine($"-- {val} --");
-        }
+        List<Swimmer> swimmers = dpp.GetSwimmers(ds);
+        List<Coach> coaches = dpp.GetCoaches(ds);
+        List<Workout> workouts = dpp.GetWorkouts(ds, pools);
+        dpp.SetMemberWorkouts(coaches, swimmers, workouts);
+        dpp.SetWorkoutCoaches(coaches);
     }
 }

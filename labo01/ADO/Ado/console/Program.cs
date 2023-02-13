@@ -1,9 +1,7 @@
 ﻿using Data;
 using Globals;
 using Logica;
-using MySql.Data.MySqlClient;
 using System.Data;
-using System.Data.SqlClient;
 
 public class Program {
     private static void Main(string[] args) {
@@ -16,9 +14,5 @@ public class Program {
         List<Workout> workouts = dpp.GetWorkouts(ds, pools);
         dpp.SetMemberWorkouts(coaches, swimmers, workouts);
         dpp.SetWorkoutCoaches(coaches);
-
-        foreach(var val in coaches) {
-            Console.WriteLine($"-- {val} --");
-        }
     }
 }
