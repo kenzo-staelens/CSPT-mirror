@@ -24,7 +24,7 @@ namespace Ado {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            DataPreProcessor dpp = new DataPreProcessor("localhost", "test", "root", "Kids2506#");
+            DataPreProcessor dpp = new DataPreProcessor("database-csharp-kenzo-staelens.mysql.database.azure.com", "test", "kenzo", "Azerty123");
             DataSet ds = new DataSet();
             List<SwimmingPool> pools = dpp.GetSwimmingPools(ds);
             List<Swimmer> swimmers = dpp.GetSwimmers(ds);

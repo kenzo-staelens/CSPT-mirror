@@ -42,7 +42,7 @@ namespace Logica {
 
         public void SetMemberWorkouts(List<Coach> coaches, List<Swimmer> swimmers, List<Workout> workouts) {
             foreach(Swimmer swimmer in swimmers) {
-                DataSet ds = this._dl.SelectData($"select * from swimmers_has_workouts where swimmers_id={swimmer.Id} order by swimmers_id,workouts_id;", "shw");
+                DataSet ds = this._dl.SelectData($"select swimmers_id,workouts_id from swimmers_has_workouts inner join workouts on workouts_id=workouts.id where swimmers_id={swimmer.Id} order by workouts_id;", "shw");
                 DataTable dt = ds.Tables["shw"];
                 int workoutIdx = 0;
                 foreach (DataRow row in dt.Rows) {
@@ -56,14 +56,13 @@ namespace Logica {
             }
 
             foreach (Coach coach in coaches) {
-                DataSet ds = this._dl.SelectData($"select * from coaches_has_workouts where coaches_id={coach.Id} order by coaches_id,workouts_id;", "chw");
+                DataSet ds = this._dl.SelectData($"select coaches_id,workouts_id from coaches_has_workouts inner join workouts on workouts_id=workouts.id where coaches_id={coach.Id} order by workouts_id;", "chw");
                 DataTable dt = ds.Tables["chw"];
                 //int workoutIdx = 0;
                 foreach (DataRow row in dt.Rows) {
                     for (int workoutIdx = 0; workoutIdx < workouts.Count(); workoutIdx++) {
                         if (workouts[workoutIdx].Id == (int)row["workouts_id"]) {
                             coach.addWorkout(workouts[workoutIdx]);
-                            break;
                         }
                     }
                 }
@@ -104,7 +103,7 @@ namespace Logica {
                 Enum.TryParse((string)row["type"], out WorkoutType type);
                 result.Add(new Workout(
                     (int)row["id"],
-                    (int)row["coaches_id"],
+                    /*(int)row["coaches_id"],*/
                     (int)row["duration"],
                     (DateTime)row["schedule"],
                     pool,

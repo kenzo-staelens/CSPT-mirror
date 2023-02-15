@@ -8,30 +8,32 @@ using System.Threading.Tasks;
 namespace Globals {
     public class Workout : IComparable {
 
-        private int _coachid;
+        //private int _coachid;
         private Coach? _coach;
         public int Id { get; }
         public Coach Coach {
-            get {
+            get;set;
+            /*get {
                 return this._coach;
             }
             set {
                 if (value.Id == _coachid) {
                     _coach = value;
                 }
-            }
+            }*/
         }
         public int Duration { get; }
         public DateTime Schedule { get; }
         public SwimmingPool Swimmingpool { get; }
         public WorkoutType Type { get; }
 
-        public Workout(int id, int coachid, int duration, DateTime schedule, SwimmingPool pool, WorkoutType type) {
+        public Workout(int id/*, int coachid*/, int duration, DateTime schedule, SwimmingPool pool, WorkoutType type) {
             Id = id;
             Duration = duration;
             Schedule = schedule;
             Swimmingpool = pool;
             Type = type;
+            //_coachid=coachid
             _coach = null;
         }
 
