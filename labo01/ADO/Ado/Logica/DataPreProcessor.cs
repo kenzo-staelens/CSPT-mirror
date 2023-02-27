@@ -11,7 +11,7 @@ namespace Logica {
     public class DataPreProcessor {
         private DataLoader _dl;
         public DataPreProcessor(string server, string db, string user, string pw) {
-            this._dl = new DataLoader("localhost", "test", "root", "Kids2506#");
+            this._dl = new DataLoader(server, db, user, pw);
         }
 
         public List<Swimmer> GetSwimmers(DataSet ds) {
@@ -44,9 +44,9 @@ namespace Logica {
             foreach(Swimmer swimmer in swimmers) {
                 DataSet ds = this._dl.SelectData($"select swimmers_id,workouts_id from swimmers_has_workouts inner join workouts on workouts_id=workouts.id where swimmers_id={swimmer.Id} order by workouts_id;", "shw");
                 DataTable dt = ds.Tables["shw"];
-                int workoutIdx = 0;
+                
                 foreach (DataRow row in dt.Rows) {
-                    for (; workoutIdx < workouts.Count(); workoutIdx++) {
+                    for (int workoutIdx = 0; workoutIdx < workouts.Count(); workoutIdx++) {
                         if (workouts[workoutIdx].Id == (int)row["workouts_id"]) {
                             swimmer.addWorkout(workouts[workoutIdx]);
                             break;
