@@ -22,14 +22,29 @@ namespace EF_Core {
     public partial class AddWorkoutWindow : Window {
         public MainWindow parent;
         public DataPreProcessor dpp;
+        public Workout workout;
         public AddWorkoutWindow() {
             InitializeComponent();
+        }
 
+        public void SetWorkout(Workout workout) {
+            this.workout = workout;
+            coaches.SelectedItem = workout.Coach;
+            type.SelectedItem = workout.Type;
+            pools.SelectedItem = workout.Swimmingpool;
+            date.SelectedDate = workout.Schedule.Date;
+            hours.Text = workout.Schedule.Hour.ToString();
+            minutes.Text = workout.Schedule.Minute.ToString();
+            durationTxt.Text = workout.Duration.ToString();
         }
 
         private void clickOk(object sender, RoutedEventArgs e) {
             try {
-                Workout workout = new Workout();
+                bool insert = false;
+                if (workout == null) {
+                    insert = true;
+                    workout = new Workout();
+                }
                 if (coaches.SelectedItem == null) throw new Exception("no coach selected");
                 if (type.SelectedItem == null) throw new Exception("no type selected");
                 if (pools.SelectedItem == null) throw new Exception("no pool selected");
@@ -47,11 +62,12 @@ namespace EF_Core {
                 workout.Duration = duration;
                 workout.Schedule = dt;
 
-                dpp.AddWorkout(workout);
+                if(insert) dpp.AddWorkout(workout);
+                dpp.Save();
                 parent.updateWorkouts();
                 this.Close();
             }
-            catch(Exception ex) {
+            catch (Exception ex) {
                 errorlabel.Content = ex.Message;
             }
         }

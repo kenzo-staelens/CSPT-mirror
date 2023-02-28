@@ -69,7 +69,12 @@ namespace EF_Core {
         }
 
         private void editSwimmer(object sender, RoutedEventArgs e) {
-            
+            AddSwimmerWindow swimmerwindow = new AddSwimmerWindow();
+            swimmerwindow.SetSwimmer(((Swimmer)SwimmerCombo.SelectedItem));
+            swimmerwindow.Show();
+            swimmerwindow.dpp = dpp;
+            swimmerwindow.parent = this;
+            swimmerwindow.Title = swimmerwindow.swimmer.ToString();
         }
 
         private void addSwimmer(object sender, RoutedEventArgs e) {
@@ -80,7 +85,15 @@ namespace EF_Core {
         }
 
         private void editWorkout(object sender, RoutedEventArgs e) {
-
+            AddWorkoutWindow workoutwindow = new AddWorkoutWindow();
+            workoutwindow.SetWorkout(((Workout)workoutList.SelectedItem));
+            workoutwindow.Show();
+            workoutwindow.dpp = dpp;
+            workoutwindow.parent = this;
+            workoutwindow.type.ItemsSource = Enum.GetValues(typeof(WorkoutType));
+            workoutwindow.pools.ItemsSource = dpp.GetPools();
+            workoutwindow.coaches.ItemsSource = dpp.GetCoaches();
+            workoutwindow.Title = workoutwindow.workout.ToString();
         }
 
         private void addWorkout(object sender, RoutedEventArgs e) {

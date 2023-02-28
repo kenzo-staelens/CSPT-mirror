@@ -52,12 +52,10 @@ namespace Data {
 
         public void AddSwimmer(Swimmer swimmer) {
             swimmerRepo.Add(swimmer);
-            dbContext.SaveChanges();
         }
 
         public void AddWorkout(Workout workout) {
             workoutRepo.Add(workout);
-            dbContext.SaveChanges();
         }
 
         public void Save() {
