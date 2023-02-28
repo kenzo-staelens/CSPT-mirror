@@ -1,0 +1,21 @@
+﻿<Window x:Class="EF_Core.AddSwimmerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EF_Core"
+        mc:Ignorable="d"
+        Title="AddSwimmerWindow" Height="150" Width="550">
+    <Grid Margin="10,10,10,-6">
+        <TextBox Name="firstname" Width="100" Margin="20,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="" />
+        <TextBox Name="lastname" Width="100" Margin="140,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="" />
+        <DatePicker Name="date" HorizontalAlignment="Left" Margin="260,20,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="genders" HorizontalAlignment="Left" Margin="380,20,0,0" VerticalAlignment="Top" Width="120"/>
+        <Button Content="OK" Click="clickOk" HorizontalAlignment="Left" Height="20" Margin="460,60,0,0" VerticalAlignment="Top" Width="40"/>
+        <Label Content="Fist Name" HorizontalAlignment="Left" Margin="20,0,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Date of Birth" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Fist Name" HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Gender" HorizontalAlignment="Left" Margin="380,0,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Name="errorlabel" Content="" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top" Width="420"/>
+    </Grid>
+</Window>

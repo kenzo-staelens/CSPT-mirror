@@ -8,12 +8,12 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <ComboBox Name="SwimmerCombo" SelectionChanged="handleCB" HorizontalAlignment="Left" Margin="40,80,0,0" VerticalAlignment="Top" Width="240"></ComboBox>
-        <Button Content="e" HorizontalAlignment="Left" Margin="300,80,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="340,80,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button Content="e" Name="eswimmer" Click="editSwimmer" HorizontalAlignment="Left" Margin="300,80,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button Content="+" Name="aswimmer" Click="addSwimmer" HorizontalAlignment="Left" Margin="340,80,0,0" VerticalAlignment="Top" Width="20"/>
         <DataGrid Name ="DG" HorizontalAlignment="Left" Height="200" Margin="40,120,0,0" VerticalAlignment="Top" Width="320" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <ListBox HorizontalAlignment="Left" Height="240" Margin="440,80,0,0" VerticalAlignment="Top" Width="280" d:ItemsSource="{d:SampleData ItemCount=5}"/>
-        <Button Content="e" HorizontalAlignment="Left" Margin="740,80,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="740,120,0,0" VerticalAlignment="Top" Width="20"/>
-        <Button Content="&lt;" HorizontalAlignment="Left" Margin="390,180,0,0" VerticalAlignment="Top" Width="20"/>
+        <ListBox Name="workoutList" SelectionChanged="selectEnable"  HorizontalAlignment="Left" Height="240" Margin="440,80,0,0" VerticalAlignment="Top" Width="280" d:ItemsSource="{d:SampleData ItemCount=5}"/>
+        <Button Content="e" Name="eworkout" Click="editWorkout" HorizontalAlignment="Left" Margin="740,80,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button Content="+" Name="aworkout" Click="addWorkout" HorizontalAlignment="Left" Margin="740,120,0,0" VerticalAlignment="Top" Width="20"/>
+        <Button Name="btnAdd"  Content="&lt;" Click="btnAddFunc"  HorizontalAlignment="Left" Margin="390,180,0,0" VerticalAlignment="Top" Width="20"/>
     </Grid>
 </Window>

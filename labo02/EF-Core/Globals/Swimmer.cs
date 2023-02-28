@@ -9,7 +9,7 @@ namespace Globals {
         private List<Workout> _workouts = new();
 
         public int FinalPoints { get; set; }
-        public List<Workout> Workouts { get { return _workouts; } }
+        public List<Workout> Workouts { get { return _workouts; } set{_workouts=value;} }
 
         public void addWorkout(Workout workout) {
             foreach (var _workout in Workouts) {

@@ -9,6 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using SharpRepository.Repository;
 using Mysqlx.Crud;
+using SharpRepository.Repository.FetchStrategies;
+using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Data {
     public class DataLoader {
@@ -29,7 +32,10 @@ namespace Data {
         }
 
         public List<Swimmer> GetSwimmers() {
-            return swimmerRepo.GetAll().ToList();
+            var strategy = new GenericFetchStrategy<Swimmer>();
+            strategy.Include(x => x.Workouts.Select(y=>y.Coach));
+            strategy.Include(x => x.Workouts.Select(y => y.Swimmingpool));
+            return swimmerRepo.GetAll(strategy).ToList();
         }
 
         public List<Coach> GetCoaches() {
@@ -44,9 +50,18 @@ namespace Data {
             return poolRepo.GetAll().ToList();
         }
 
-        public void test() {
-            //https://stackoverflow.com/questions/70155197/accessing-third-table-auto-generated-by-entity-framework-when-using-many-to-many
-            var query = dbContext.Workouts.Where(w => w.Swimmers.Any(s => true));
+        public void AddSwimmer(Swimmer swimmer) {
+            swimmerRepo.Add(swimmer);
+            dbContext.SaveChanges();
+        }
+
+        public void AddWorkout(Workout workout) {
+            workoutRepo.Add(workout);
+            dbContext.SaveChanges();
+        }
+
+        public void Save() {
+            dbContext.SaveChanges();
         }
     }
 }

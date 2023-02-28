@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 using System.Linq;
 
 namespace Globals {
-    public class Workout {
+    public class Workout : IComparable{
         public int Id { get; set; }
         public Coach Coach {get; set;}
         public int Duration { get; set; }
         public DateTime Schedule { get; set; }
         public SwimmingPool Swimmingpool { get; set; }
         public WorkoutType Type { get; set; }
-        public List<Swimmer> Swimmers { get; } = new();
+        public List<Swimmer> Swimmers { get; set; } = new();
 
         public void addSwimmer(Swimmer swimmer) {
             foreach(var _swimmer in Swimmers) {

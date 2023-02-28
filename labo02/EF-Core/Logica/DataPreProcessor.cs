@@ -16,16 +16,40 @@ namespace Logica {
             _dl = new();
         }
 
-        private List<Workout> GetWorkouts() {
-            var workouts = _dl.GetWorkouts();
-            var coaches = _dl.GetCoaches();
-            return null;
+        public List<Workout> GetWorkouts() {
+            return _dl.GetWorkouts();
+        }
+
+        public List<Workout> GetWorkouts(List<Workout> allworkouts, Swimmer swimmer) {
+            var workouts = (from workout in allworkouts where !workout.Swimmers.Contains(swimmer) select workout).ToList();
+            workouts.Sort();
+            return workouts;
         }
 
         public List<Swimmer> GetSwimmers() {
             var swimmers = _dl.GetSwimmers();
-            
+            swimmers.Sort();
             return swimmers;
+        }
+
+        public void AddSwimmer(Swimmer swimmer) {
+            _dl.AddSwimmer(swimmer);
+        }
+
+        public void AddWorkout(Workout workout) {
+            _dl.AddWorkout(workout);
+        }
+
+        public List<Coach> GetCoaches() {
+            return _dl.GetCoaches();
+        }
+
+        public List<SwimmingPool> GetPools() {
+            return _dl.GetSwimmingPools();
+        }
+
+        public void Save() {
+            _dl.Save();
         }
     }
 }
