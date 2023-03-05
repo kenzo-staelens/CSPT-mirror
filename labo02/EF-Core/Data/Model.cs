@@ -21,6 +21,6 @@ namespace Data {
         public WorkoutContext() { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseMySQL("server=localhost;database=test;user=root;password=Kids2506#");
+            => options.UseMySQL("server=database-kenzo-c-sharp.mysql.database.azure.com;database=test;user=kenzo;password=Azerty123");
     }
 }

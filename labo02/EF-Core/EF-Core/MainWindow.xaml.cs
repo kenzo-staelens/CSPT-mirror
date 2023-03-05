@@ -52,6 +52,7 @@ namespace EF_Core {
             btnAdd.IsEnabled = false;
             eswimmer.IsEnabled = true;
             eworkout.IsEnabled = false;
+            //workoutList.SelectedItem = null;
         }
 
         private void selectEnable(object sender, SelectionChangedEventArgs e) {

@@ -22,7 +22,7 @@ namespace Data {
         private WorkoutContext dbContext;
         public DataLoader() {
             var optionsBuilder = new DbContextOptionsBuilder<WorkoutContext>();
-            optionsBuilder.UseMySQL("server=localhost;database=test;user=root;password=Kids2506#");
+            optionsBuilder.UseMySQL("server=database-kenzo-c-sharp.mysql.database.azure.com;database=test;user=kenzo;password=Azerty123");
             dbContext = new WorkoutContext(optionsBuilder.Options);
 
             swimmerRepo = new EfCoreRepository<Swimmer>(dbContext);
