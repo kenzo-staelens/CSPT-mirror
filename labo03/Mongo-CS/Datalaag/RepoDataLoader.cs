@@ -12,10 +12,10 @@ using System.Runtime.CompilerServices;
 
 namespace Datalaag {
     public class RepoDataLoader {
-        private MongoDbRepository<Swimmer,int> swimmerRepo;
-        private MongoDbRepository<Coach,int> coachRepo;
-        private MongoDbRepository<Workout,int> workoutRepo;
-        private MongoDbRepository<SwimmingPool,int> poolRepo;
+        private MongoDbRepository<Swimmer> swimmerRepo;
+        private MongoDbRepository<Coach> coachRepo;
+        private MongoDbRepository<Workout> workoutRepo;
+        private MongoDbRepository<SwimmingPool> poolRepo;
         private int _nextSwimmerId;
         private int _nextCoachId;
         private int _nextWorkoutId;
@@ -29,10 +29,10 @@ namespace Datalaag {
 
             string conString = "mongodb://localhost/test";
 
-            swimmerRepo = new MongoDbRepository<Swimmer,int>(conString);
-            coachRepo = new MongoDbRepository<Coach,int>(conString);
-            workoutRepo = new MongoDbRepository<Workout,int>(conString);
-            poolRepo = new MongoDbRepository<SwimmingPool,int>(conString);
+            swimmerRepo = new MongoDbRepository<Swimmer>(conString);
+            coachRepo = new MongoDbRepository<Coach>(conString);
+            workoutRepo = new MongoDbRepository<Workout>(conString);
+            poolRepo = new MongoDbRepository<SwimmingPool>(conString);
             SetAutoIncrements();
 
             var p = new SwimmingPool() { City = "c" , Id=1, LaneLength=PoolLaneLength._50, Name="name", Street="street", ZipCode=1001};
