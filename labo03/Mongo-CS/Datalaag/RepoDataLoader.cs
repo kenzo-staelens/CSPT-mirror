@@ -12,10 +12,10 @@ using System.Runtime.CompilerServices;
 
 namespace Datalaag {
     public class RepoDataLoader {
-        private MongoDbRepository<Swimmer> swimmerRepo;
-        private MongoDbRepository<Coach> coachRepo;
-        private MongoDbRepository<Workout> workoutRepo;
-        private MongoDbRepository<SwimmingPool> poolRepo;
+        private MongoDbRepository<Swimmer,int> swimmerRepo;
+        private MongoDbRepository<Coach,int> coachRepo;
+        private MongoDbRepository<Workout,int> workoutRepo;
+        private MongoDbRepository<SwimmingPool,int> poolRepo;
         private int _nextSwimmerId;
         private int _nextCoachId;
         private int _nextWorkoutId;
@@ -27,15 +27,24 @@ namespace Datalaag {
             BsonClassMap.RegisterClassMap<Workout>();
             BsonClassMap.RegisterClassMap<SwimmingPool>();
 
-            swimmerRepo = new MongoDbRepository<Swimmer>("mongodb://localhost/test");
-            coachRepo = new MongoDbRepository<Coach>();
-            workoutRepo = new MongoDbRepository<Workout>();
-            poolRepo = new MongoDbRepository<SwimmingPool>();
+            string conString = "mongodb://localhost/test";
 
-            var w = new Workout() { Id = 1, Duration = 5, Coach = null, Schedule = DateTime.Now, Swimmingpool = null, Type = WorkoutType.ENDURANCE };
-            var s = new Swimmer() { Id = 6, FirstName = "abc", LastName = "def", DateOfBirth = DateTime.Now, Gender = 'M', FinalPoints = 0, Workouts = new List<Workout>() { w } };
-            AddWorkout(w);
+            swimmerRepo = new MongoDbRepository<Swimmer,int>(conString);
+            coachRepo = new MongoDbRepository<Coach,int>(conString);
+            workoutRepo = new MongoDbRepository<Workout,int>(conString);
+            poolRepo = new MongoDbRepository<SwimmingPool,int>(conString);
             SetAutoIncrements();
+
+            var p = new SwimmingPool() { City = "c" , Id=1, LaneLength=PoolLaneLength._50, Name="name", Street="street", ZipCode=1001};
+            var c = new Coach() { Id = 1, DateOfBirth = DateTime.Now, FirstName = "c", LastName = "last", Gender = 'F', Level = CoachLevel.INITIATOR };
+            var w = new Workout() { Id = 1, Duration = 5, Coach = c, Schedule = DateTime.Now, Swimmingpool = p, Type = WorkoutType.ENDURANCE };
+            var s = new Swimmer() { Id = 6, FirstName = "abc", LastName = "def", DateOfBirth = DateTime.Now, Gender = 'M', FinalPoints = 0, Workouts = new List<Workout>() { w } };
+            
+            //AddWorkout(w);
+            //AddSwimmer(s);
+            //AddSwimmingPool(p);
+            //AddCoach(c);
+
         }
 
         private void SetAutoIncrements() {
@@ -73,12 +82,24 @@ namespace Datalaag {
             _nextWorkoutId++;
         }
 
+        public void AddCoach(Coach coach) {
+            coach.Id = _nextCoachId;
+            coachRepo.Add(coach);
+            _nextCoachId++;
+        }
+
+        public void AddSwimmingPool(SwimmingPool pool) {
+            pool.Id = _nextPoolId;
+            poolRepo.Add(pool);
+            _nextPoolId++;
+        }
+
         public void UpdateSwimmer(Swimmer swimmer) {
             swimmerRepo.Update(swimmer);
         }
 
         public void UpdateWorkout(Workout workout) {
-
+            workoutRepo.Update(workout);
         }
     }
 }

@@ -55,13 +55,13 @@ namespace EF_Core {
 
                 if (insert) dpp.AddSwimmer(swimmer);
                 else {
-                    //update here
+                    dpp.UpdateSwimmer(swimmer);
                 }
                 parent.updateSwimmers();
                 this.Close();
             }
             catch (Exception ex) {
-                errorlabel.Content = ex.Message;
+                errorlabel.Content = ex;
             }
         }
     }

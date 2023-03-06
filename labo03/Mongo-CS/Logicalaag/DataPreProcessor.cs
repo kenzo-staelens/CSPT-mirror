@@ -50,5 +50,13 @@ namespace Logicalaag {
         public void AddWorkout(Workout workout) {
             _dl.AddWorkout(workout);
         }
+
+        public void UpdateSwimmer(Swimmer swimmer) {
+            _dl.UpdateSwimmer(swimmer);
+        }
+
+        public void UpdateWorkout(Workout workout) {
+            _dl.UpdateWorkout(workout);
+        }
     }
 }

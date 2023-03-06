@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Mongo_CS"
         mc:Ignorable="d"
-        Title="AddSwimmerWindow" Height="150" Width="550">
+        Title="AddSwimmerWindow" Height="150" Width="1100">
     <Grid Margin="10,10,10,-6">
         <TextBox Name="firstname" Width="100" Margin="20,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="" />
         <TextBox Name="lastname" Width="100" Margin="140,20,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Text="" />
@@ -16,6 +16,6 @@
         <Label Content="Date of Birth" HorizontalAlignment="Left" Margin="140,0,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Fist Name" HorizontalAlignment="Left" Margin="260,0,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Gender" HorizontalAlignment="Left" Margin="380,0,0,0" VerticalAlignment="Top" Width="120"/>
-        <Label Name="errorlabel" Content="" HorizontalAlignment="Left" Margin="20,60,0,0" VerticalAlignment="Top" Width="420"/>
+        <Label Name="errorlabel" Content="" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Width="840"/>
     </Grid>
 </Window>

@@ -63,7 +63,7 @@ namespace EF_Core {
 
                 if(insert) dpp.AddWorkout(workout);
                 else {
-                    //update here
+                    dpp.UpdateWorkout(workout);
                 }
                 parent.updateWorkouts();
                 this.Close();
