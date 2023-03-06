@@ -11,38 +11,31 @@ using SharpRepository.Repository.FetchStrategies;
 using System.Runtime.CompilerServices;
 
 namespace Datalaag {
-    public class DataLoader {
-        private MongoClient _client;
-        private IMongoDatabase _db;
-
-        private IMongoCollection<Swimmer> swimmers;
-        private IMongoCollection<Coach> coaches;
-        private IMongoCollection<Workout> workouts;
-        private IMongoCollection<SwimmingPool> swimmingpools;
+    public class RepoDataLoader {
+        private MongoDbRepository<Swimmer> swimmerRepo;
+        private MongoDbRepository<Coach> coachRepo;
+        private MongoDbRepository<Workout> workoutRepo;
+        private MongoDbRepository<SwimmingPool> poolRepo;
         private int _nextSwimmerId;
         private int _nextCoachId;
         private int _nextWorkoutId;
         private int _nextPoolId;
 
-        public DataLoader() {
+        public RepoDataLoader() {
             BsonClassMap.RegisterClassMap<Coach>();
             BsonClassMap.RegisterClassMap<Swimmer>();
             BsonClassMap.RegisterClassMap<Workout>();
             BsonClassMap.RegisterClassMap<SwimmingPool>();
 
-            _client = new MongoClient("mongodb://localhost");
-            _db = _client.GetDatabase("test");
-
-           swimmers = _db.GetCollection<Swimmer>("swimmers");
-           coaches = _db.GetCollection<Coach>("coaches");
-           workouts = _db.GetCollection<Workout>("workouts");
-           swimmingpools = _db.GetCollection<SwimmingPool>("swimmingpools");
+            swimmerRepo = new MongoDbRepository<Swimmer>("mongodb://localhost/test");
+            coachRepo = new MongoDbRepository<Coach>();
+            workoutRepo = new MongoDbRepository<Workout>();
+            poolRepo = new MongoDbRepository<SwimmingPool>();
 
             var w = new Workout() { Id = 1, Duration = 5, Coach = null, Schedule = DateTime.Now, Swimmingpool = null, Type = WorkoutType.ENDURANCE };
             var s = new Swimmer() { Id = 6, FirstName = "abc", LastName = "def", DateOfBirth = DateTime.Now, Gender = 'M', FinalPoints = 0, Workouts = new List<Workout>() { w } };
+            AddWorkout(w);
             SetAutoIncrements();
-            //addSwimmer(s);
-            addWorkout(w);
         }
 
         private void SetAutoIncrements() {
@@ -50,33 +43,42 @@ namespace Datalaag {
             _nextCoachId = (from swimmer in GetCoaches() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
             _nextWorkoutId = (from swimmer in GetWorkouts() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
             _nextPoolId = (from swimmer in GetSwimmingPools() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
-
         }
 
         public List<Swimmer> GetSwimmers() {
-            return swimmers.Find(x => true).ToList();
+            return swimmerRepo.GetAll().ToList();
         }
 
         public List<Coach> GetCoaches() {
-            return coaches.Find(x => true).ToList();
-        }
-        public List<Workout> GetWorkouts() {
-            return workouts.Find(x => true).ToList();
-        }
-        public List<SwimmingPool> GetSwimmingPools() {
-            return swimmingpools.Find(x => true).ToList();
+            return coachRepo.GetAll().ToList();
         }
 
-        public void addSwimmer(Swimmer swimmer) {
+        public List<Workout> GetWorkouts() {
+            return workoutRepo.GetAll().ToList();
+        }
+
+        public List<SwimmingPool> GetSwimmingPools() {
+            return poolRepo.GetAll().ToList();
+        }
+
+        public void AddSwimmer(Swimmer swimmer) {
             swimmer.Id = _nextSwimmerId;
-            swimmers.InsertOne(swimmer);
+            swimmerRepo.Add(swimmer);
             _nextSwimmerId++;
         }
 
-        public void addWorkout(Workout workout) {
+        public void AddWorkout(Workout workout) {
             workout.Id = _nextWorkoutId;
-            workouts.InsertOne(workout);
+            workoutRepo.Add(workout);
             _nextWorkoutId++;
+        }
+
+        public void UpdateSwimmer(Swimmer swimmer) {
+            swimmerRepo.Update(swimmer);
+        }
+
+        public void UpdateWorkout(Workout workout) {
+
         }
     }
 }

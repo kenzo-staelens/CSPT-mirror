@@ -23,5 +23,11 @@ namespace Globals {
             if (workout2 != null) return this.Schedule.CompareTo(workout2.Schedule);
             else return 1;
         }
+
+        public bool Equals(Workout other) {
+            if (other == null) return false;
+            if (this.Id == other.Id) return true;
+            return false;
+        }
     }
 }
