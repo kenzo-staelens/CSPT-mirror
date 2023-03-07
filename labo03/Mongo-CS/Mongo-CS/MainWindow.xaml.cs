@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Autofac;
 using Globals;
 using Logicalaag;
+using Mongo_CS;
 
 namespace EF_Core {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
-        DataPreProcessor dpp;
+        IDataPreProcessor dpp;
         public List<Workout> workouts;
         public List<Swimmer> swimmers;
         public MainWindow() {
             InitializeComponent();
-            dpp = new DataPreProcessor();
+            IContainer container = IoCBuilder.Build();
+            dpp = container.Resolve<IDataPreProcessor>();
+
             workouts = dpp.GetWorkouts();
             swimmers = dpp.GetSwimmers();
             dpp.MergeWorkouts(swimmers, workouts);
@@ -96,7 +100,7 @@ namespace EF_Core {
             workoutwindow.coaches.ItemsSource = coaches;
 
             //dirty hack wegens niet zelfde objecten
-            var rc = (from c in coaches where c.Id==workout.Coach.Id select c).FirstOrDefault(coaches[0]);
+            var rc = (from c in coaches where c.Id == workout.Coach.Id select c).FirstOrDefault(coaches[0]);
             var cindex = coaches.IndexOf(rc);
             workout.Coach = rc;
             var rp = (from p in pools where p.Id == workout.Swimmingpool.Id select p).FirstOrDefault(pools[0]);
