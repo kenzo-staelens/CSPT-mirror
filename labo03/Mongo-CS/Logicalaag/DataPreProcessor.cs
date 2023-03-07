@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Datalaag;
@@ -25,6 +26,16 @@ namespace Logicalaag {
             return workouts;
         }
 
+        public void MergeWorkouts(List<Swimmer> swimmers, List<Workout> workouts) {
+            foreach (var swimmer in swimmers) {
+                foreach (var workout in workouts) {
+                    for (int i = 0; i < swimmer.Workouts.Count(); i++) {
+                        if (swimmer.Workouts[i].Equals(workout)) swimmer.Workouts[i] = workout;
+                    }
+                }
+            }
+        }
+
         public List<Workout> GetWorkouts(List<Workout> allworkouts, Swimmer swimmer) {
             var workouts = (from workout in allworkouts where !swimmer.Workouts.Contains(workout) select workout).ToList();
             workouts.Sort();
@@ -39,7 +50,6 @@ namespace Logicalaag {
 
         public List<SwimmingPool> GetPools() {
             var pools = _dl.GetSwimmingPools();
-            pools.Sort();
             return pools;
         }
 
@@ -53,6 +63,10 @@ namespace Logicalaag {
 
         public void UpdateSwimmer(Swimmer swimmer) {
             _dl.UpdateSwimmer(swimmer);
+        }
+
+        public void UpdateSwimmers(List<Swimmer> swimmers) {
+            _dl.UpdateSwimmers(swimmers);
         }
 
         public void UpdateWorkout(Workout workout) {

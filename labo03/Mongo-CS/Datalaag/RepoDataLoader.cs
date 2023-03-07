@@ -1,17 +1,15 @@
 ﻿using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Globals;
 using SharpRepository.MongoDbRepository;
-using SharpRepository.Repository.FetchStrategies;
-using System.Runtime.CompilerServices;
 
 namespace Datalaag {
     public class RepoDataLoader {
+        private MongoClient _client;
+        private IMongoDatabase _db;
+        private IMongoCollection<Swimmer> swimmers;
+        private IMongoCollection<Workout> workouts;
+
         private MongoDbRepository<Swimmer> swimmerRepo;
         private MongoDbRepository<Coach> coachRepo;
         private MongoDbRepository<Workout> workoutRepo;
@@ -29,6 +27,12 @@ namespace Datalaag {
 
             string conString = "mongodb://localhost/test";
 
+            _client = new MongoClient("mongodb://localhost");
+            _db = _client.GetDatabase("test");
+            swimmers = _db.GetCollection<Swimmer>("Swimmer");
+            workouts = _db.GetCollection<Workout>("Workout");
+
+
             swimmerRepo = new MongoDbRepository<Swimmer>(conString);
             coachRepo = new MongoDbRepository<Coach>(conString);
             workoutRepo = new MongoDbRepository<Workout>(conString);
@@ -39,12 +43,6 @@ namespace Datalaag {
             var c = new Coach() { Id = 1, DateOfBirth = DateTime.Now, FirstName = "c", LastName = "last", Gender = 'F', Level = CoachLevel.INITIATOR };
             var w = new Workout() { Id = 1, Duration = 5, Coach = c, Schedule = DateTime.Now, Swimmingpool = p, Type = WorkoutType.ENDURANCE };
             var s = new Swimmer() { Id = 6, FirstName = "abc", LastName = "def", DateOfBirth = DateTime.Now, Gender = 'M', FinalPoints = 0, Workouts = new List<Workout>() { w } };
-            
-            //AddWorkout(w);
-            //AddSwimmer(s);
-            //AddSwimmingPool(p);
-            //AddCoach(c);
-
         }
 
         private void SetAutoIncrements() {
@@ -95,11 +93,20 @@ namespace Datalaag {
         }
 
         public void UpdateSwimmer(Swimmer swimmer) {
-            swimmerRepo.Update(swimmer);
+            var filter = Builders<Swimmer>.Filter.Eq(s => s.Id, swimmer.Id);
+            swimmers.ReplaceOne(filter,swimmer);
+        }
+        public void UpdateSwimmers(List<Swimmer> swimmerlist) {
+            foreach (var swimmer in swimmerlist) {
+                var filter = Builders<Swimmer>.Filter.Eq(s => s.Id, swimmer.Id);
+                swimmers.ReplaceOne(filter, swimmer);
+            }
         }
 
         public void UpdateWorkout(Workout workout) {
-            workoutRepo.Update(workout);
+            var filter = Builders<Workout>.Filter.Eq(s => s.Id, workout.Id);
+            workouts.ReplaceOne(filter, workout);
+            //workoutRepo.Update(workout);
         }
     }
 }

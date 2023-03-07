@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Intrinsics.Arm;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Globals;
 using Logicalaag;
 
@@ -22,16 +12,24 @@ namespace EF_Core {
     /// </summary>
     public partial class MainWindow : Window {
         DataPreProcessor dpp;
-        List<Workout> workouts;
+        public List<Workout> workouts;
+        public List<Swimmer> swimmers;
         public MainWindow() {
             InitializeComponent();
             dpp = new DataPreProcessor();
             workouts = dpp.GetWorkouts();
+            swimmers = dpp.GetSwimmers();
+            dpp.MergeWorkouts(swimmers, workouts);
             updateSwimmers();
         }
 
+        public void UpdateSwimmerAt(Swimmer swimmer, int idx) {
+            swimmers[idx] = swimmer;
+            SwimmerCombo.Items.Refresh();
+        }
+
         public void updateSwimmers() {
-            SwimmerCombo.ItemsSource = dpp.GetSwimmers();
+            SwimmerCombo.ItemsSource = swimmers;
             DG.IsReadOnly = true;
             workoutList.ItemsSource = workouts;
             btnAdd.IsEnabled = false;
@@ -48,7 +46,7 @@ namespace EF_Core {
         private void handleCB(object sender, SelectionChangedEventArgs e) {
             var swimmer = ((Swimmer)SwimmerCombo.SelectedItem);
             DG.ItemsSource = ((Swimmer)SwimmerCombo.SelectedItem).Workouts;
-            workoutList.ItemsSource = dpp.GetWorkouts(workouts,swimmer);
+            workoutList.ItemsSource = dpp.GetWorkouts(workouts, swimmer);
             btnAdd.IsEnabled = false;
             eswimmer.IsEnabled = true;
             eworkout.IsEnabled = false;
@@ -66,15 +64,19 @@ namespace EF_Core {
             var swimmer = ((Swimmer)SwimmerCombo.SelectedItem);
             swimmer.addWorkout(workout);
             workoutList.ItemsSource = dpp.GetWorkouts(workouts, swimmer);
+            dpp.UpdateSwimmers(swimmers);
         }
 
         private void editSwimmer(object sender, RoutedEventArgs e) {
             AddSwimmerWindow swimmerwindow = new AddSwimmerWindow();
-            swimmerwindow.SetSwimmer(((Swimmer)SwimmerCombo.SelectedItem));
+            Swimmer swimmer = ((Swimmer)SwimmerCombo.SelectedItem);
+            int swindex = swimmers.IndexOf(swimmer);
+
+            swimmerwindow.SetSwimmer(swimmer, swindex);
             swimmerwindow.Show();
             swimmerwindow.dpp = dpp;
             swimmerwindow.parent = this;
-            swimmerwindow.Title = swimmerwindow.swimmer.ToString();
+            swimmerwindow.Title = swimmer.ToString();
         }
 
         private void addSwimmer(object sender, RoutedEventArgs e) {
@@ -86,14 +88,26 @@ namespace EF_Core {
 
         private void editWorkout(object sender, RoutedEventArgs e) {
             AddWorkoutWindow workoutwindow = new AddWorkoutWindow();
-            workoutwindow.SetWorkout(((Workout)workoutList.SelectedItem));
+            Workout workout = (Workout)workoutList.SelectedItem;
+            workoutwindow.type.ItemsSource = Enum.GetValues(typeof(WorkoutType));
+            var pools = dpp.GetPools();
+            workoutwindow.pools.ItemsSource = pools;
+            var coaches = dpp.GetCoaches();
+            workoutwindow.coaches.ItemsSource = coaches;
+
+            //dirty hack wegens niet zelfde objecten
+            var rc = (from c in coaches where c.Id==workout.Coach.Id select c).FirstOrDefault(coaches[0]);
+            var cindex = coaches.IndexOf(rc);
+            workout.Coach = rc;
+            var rp = (from p in pools where p.Id == workout.Swimmingpool.Id select p).FirstOrDefault(pools[0]);
+            var pindex = pools.IndexOf(rp);
+            workout.Swimmingpool = rp;
+
+            workoutwindow.SetWorkout(workout);
             workoutwindow.Show();
             workoutwindow.dpp = dpp;
             workoutwindow.parent = this;
-            workoutwindow.type.ItemsSource = Enum.GetValues(typeof(WorkoutType));
-            workoutwindow.pools.ItemsSource = dpp.GetPools();
-            workoutwindow.coaches.ItemsSource = dpp.GetCoaches();
-            workoutwindow.Title = workoutwindow.workout.ToString();
+            workoutwindow.Title = workout.ToString();
         }
 
         private void addWorkout(object sender, RoutedEventArgs e) {

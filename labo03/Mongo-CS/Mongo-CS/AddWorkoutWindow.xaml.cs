@@ -65,7 +65,7 @@ namespace EF_Core {
                 else {
                     dpp.UpdateWorkout(workout);
                 }
-                parent.updateWorkouts();
+                parent.workouts.Add(workout);
                 this.Close();
             }
             catch (Exception ex) {

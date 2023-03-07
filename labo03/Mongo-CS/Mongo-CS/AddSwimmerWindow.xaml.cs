@@ -21,19 +21,22 @@ namespace EF_Core {
     public partial class AddSwimmerWindow : Window {
         public DataPreProcessor dpp;
         public MainWindow parent;
-        public Swimmer swimmer;
+        private Swimmer swimmer;
+        private int updateIdx;
 
         public AddSwimmerWindow() {
             InitializeComponent();
             genders.ItemsSource = new char[] { 'M', 'F' };
+            updateIdx = -1;
         }
 
-        public void SetSwimmer(Swimmer swimmer) {
+        public void SetSwimmer(Swimmer swimmer,int idx) {
             this.swimmer = swimmer;
             firstname.Text = swimmer.FirstName;
             lastname.Text = swimmer.LastName;
             genders.SelectedItem = swimmer.Gender;
             date.SelectedDate = swimmer.DateOfBirth.Date;
+            updateIdx = idx;
         }
 
         private void clickOk(object sender, RoutedEventArgs e) {
@@ -57,7 +60,7 @@ namespace EF_Core {
                 else {
                     dpp.UpdateSwimmer(swimmer);
                 }
-                parent.updateSwimmers();
+                parent.UpdateSwimmerAt(swimmer, updateIdx);
                 this.Close();
             }
             catch (Exception ex) {
