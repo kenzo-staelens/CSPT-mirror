@@ -18,9 +18,7 @@ namespace EF_Core {
         public List<Swimmer> swimmers;
         public MainWindow() {
             InitializeComponent();
-            IContainer container = IoCBuilder.Build();
-            dpp = container.Resolve<IDataPreProcessor>();
-
+            dpp = new DataPreProcessor();
             workouts = dpp.GetWorkouts();
             swimmers = dpp.GetSwimmers();
             dpp.MergeWorkouts(swimmers, workouts);
