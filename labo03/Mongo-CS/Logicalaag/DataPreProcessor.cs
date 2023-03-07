@@ -8,7 +8,7 @@ using Datalaag;
 using Globals;
 
 namespace Logicalaag {
-    public class DataPreProcessor {
+    public class DataPreProcessor : IDataPreProcessor{
         private RepoDataLoader _dl;
         public DataPreProcessor() {
             _dl = new RepoDataLoader();

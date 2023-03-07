@@ -19,7 +19,7 @@ namespace EF_Core {
     /// Interaction logic for AddSwimmerWindow.xaml
     /// </summary>
     public partial class AddSwimmerWindow : Window {
-        public DataPreProcessor dpp;
+        public IDataPreProcessor dpp;
         public MainWindow parent;
         private Swimmer swimmer;
         private int updateIdx;

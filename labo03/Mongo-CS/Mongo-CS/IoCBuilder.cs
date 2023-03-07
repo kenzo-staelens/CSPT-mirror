@@ -1,11 +1,12 @@
 ﻿using Autofac;
+using Logicalaag;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Globals {
+namespace Mongo_CS {
     public class IoCBuilder {
         internal static IContainer Build() {
             ContainerBuilder builder = new ContainerBuilder();
@@ -14,7 +15,7 @@ namespace Globals {
         }
 
         private static void RegisterTypes(ContainerBuilder builder) {
-            //builder.RegisterType<IDataLoader>().As<RepoDataLoader>();
+            builder.RegisterType<DataPreProcessor>().As<IDataPreProcessor>();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace EF_Core {
     /// </summary>
     public partial class AddWorkoutWindow : Window {
         public MainWindow parent;
-        public DataPreProcessor dpp;
+        public IDataPreProcessor dpp;
         public Workout workout;
         public AddWorkoutWindow() {
             InitializeComponent();
