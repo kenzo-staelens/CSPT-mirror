@@ -5,15 +5,15 @@ using SharpRepository.MongoDbRepository;
 
 namespace Datalaag {
     public class RepoDataLoader {
-        private MongoClient _client;
-        private IMongoDatabase _db;
-        private IMongoCollection<Swimmer> swimmers;
-        private IMongoCollection<Workout> workouts;
+        //private MongoClient _client;
+        //private IMongoDatabase _db;
+        //private IMongoCollection<Swimmer> swimmers;
+        //private IMongoCollection<Workout> workouts;
 
-        private MongoDbRepository<Swimmer> swimmerRepo;
-        private MongoDbRepository<Coach> coachRepo;
-        private MongoDbRepository<Workout> workoutRepo;
-        private MongoDbRepository<SwimmingPool> poolRepo;
+        private MongoDbRepository<Swimmer,int> swimmerRepo;
+        private MongoDbRepository<Coach,int> coachRepo;
+        private MongoDbRepository<Workout,int> workoutRepo;
+        private MongoDbRepository<SwimmingPool,int> poolRepo;
         private int _nextSwimmerId;
         private int _nextCoachId;
         private int _nextWorkoutId;
@@ -25,24 +25,29 @@ namespace Datalaag {
             BsonClassMap.RegisterClassMap<Workout>();
             BsonClassMap.RegisterClassMap<SwimmingPool>();
 
-            string conString = "mongodb://localhost/test";
+            //string conString = "mongodb://localhost/test";
+            string conString = "mongodb+srv://kenzostael:ODhp5AzGaFdNmNbt@cluster0.s6xuzvf.mongodb.net/test";
 
-            _client = new MongoClient("mongodb://localhost");
-            _db = _client.GetDatabase("test");
-            swimmers = _db.GetCollection<Swimmer>("Swimmer");
-            workouts = _db.GetCollection<Workout>("Workout");
+            //_client = new MongoClient("mongodb://localhost");
+            //_db = _client.GetDatabase("test");
+            //swimmers = _db.GetCollection<Swimmer>("Swimmer");
+            //workouts = _db.GetCollection<Workout>("Workout");
 
-
-            swimmerRepo = new MongoDbRepository<Swimmer>(conString);
-            coachRepo = new MongoDbRepository<Coach>(conString);
-            workoutRepo = new MongoDbRepository<Workout>(conString);
-            poolRepo = new MongoDbRepository<SwimmingPool>(conString);
-            SetAutoIncrements();
-
-            var p = new SwimmingPool() { City = "c" , Id=1, LaneLength=PoolLaneLength._50, Name="name", Street="street", ZipCode=1001};
-            var c = new Coach() { Id = 1, DateOfBirth = DateTime.Now, FirstName = "c", LastName = "last", Gender = 'F', Level = CoachLevel.INITIATOR };
-            var w = new Workout() { Id = 1, Duration = 5, Coach = c, Schedule = DateTime.Now, Swimmingpool = p, Type = WorkoutType.ENDURANCE };
-            var s = new Swimmer() { Id = 6, FirstName = "abc", LastName = "def", DateOfBirth = DateTime.Now, Gender = 'M', FinalPoints = 0, Workouts = new List<Workout>() { w } };
+            try {
+                swimmerRepo = new MongoDbRepository<Swimmer, int>(conString);
+                coachRepo = new MongoDbRepository<Coach, int>(conString);
+                workoutRepo = new MongoDbRepository<Workout, int>(conString);
+                poolRepo = new MongoDbRepository<SwimmingPool, int>(conString);
+                SetAutoIncrements();
+            }
+            catch (Exception ex) {
+                conString = "mongodb://localhost/test";
+                swimmerRepo = new MongoDbRepository<Swimmer, int>(conString);
+                coachRepo = new MongoDbRepository<Coach, int>(conString);
+                workoutRepo = new MongoDbRepository<Workout, int>(conString);
+                poolRepo = new MongoDbRepository<SwimmingPool, int>(conString);
+                SetAutoIncrements();
+            }
         }
 
         private void SetAutoIncrements() {
@@ -93,20 +98,21 @@ namespace Datalaag {
         }
 
         public void UpdateSwimmer(Swimmer swimmer) {
-            var filter = Builders<Swimmer>.Filter.Eq(s => s.Id, swimmer.Id);
-            swimmers.ReplaceOne(filter,swimmer);
+            //var filter = Builders<Swimmer>.Filter.Eq(s => s.Id, swimmer.Id);
+            //swimmers.ReplaceOne(filter,swimmer);
+            swimmerRepo.Update(swimmer);
         }
         public void UpdateSwimmers(List<Swimmer> swimmerlist) {
             foreach (var swimmer in swimmerlist) {
-                var filter = Builders<Swimmer>.Filter.Eq(s => s.Id, swimmer.Id);
-                swimmers.ReplaceOne(filter, swimmer);
+                UpdateSwimmer(swimmer);
+
             }
         }
 
         public void UpdateWorkout(Workout workout) {
-            var filter = Builders<Workout>.Filter.Eq(s => s.Id, workout.Id);
-            workouts.ReplaceOne(filter, workout);
-            //workoutRepo.Update(workout);
+            //var filter = Builders<Workout>.Filter.Eq(s => s.Id, workout.Id);
+            //workouts.ReplaceOne(filter, workout);
+            workoutRepo.Update(workout);
         }
     }
 }

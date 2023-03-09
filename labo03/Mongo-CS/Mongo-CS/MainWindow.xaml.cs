@@ -31,6 +31,11 @@ namespace EF_Core {
             SwimmerCombo.Items.Refresh();
         }
 
+        public void UpdateWorkoutAt(Workout workout, int idx) {
+            workouts[idx] = workout;
+            workoutList.Items.Refresh();
+        }
+
         public void updateSwimmers() {
             SwimmerCombo.ItemsSource = swimmers;
             DG.IsReadOnly = true;
@@ -38,12 +43,13 @@ namespace EF_Core {
             btnAdd.IsEnabled = false;
             eswimmer.IsEnabled = false;
             eworkout.IsEnabled = false;
+            SwimmerCombo.Items.Refresh();
         }
 
         public void updateWorkouts() {
-            workouts = dpp.GetWorkouts();
             eworkout.IsEnabled = false;
             btnAdd.IsEnabled = false;
+            workoutList.Items.Refresh();
         }
 
         private void handleCB(object sender, SelectionChangedEventArgs e) {
@@ -106,7 +112,9 @@ namespace EF_Core {
             var pindex = pools.IndexOf(rp);
             workout.Swimmingpool = rp;
 
-            workoutwindow.SetWorkout(workout);
+            int windex = workouts.IndexOf(workout);
+
+            workoutwindow.SetWorkout(workout,windex);
             workoutwindow.Show();
             workoutwindow.dpp = dpp;
             workoutwindow.parent = this;

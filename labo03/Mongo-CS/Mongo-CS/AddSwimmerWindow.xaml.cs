@@ -56,11 +56,16 @@ namespace EF_Core {
                 swimmer.Gender = ((char)genders.SelectedItem);
                 swimmer.DateOfBirth = (DateTime)dt;
 
-                if (insert) dpp.AddSwimmer(swimmer);
+                if (insert) {
+                    dpp.AddSwimmer(swimmer);
+                    parent.swimmers.Add(swimmer);
+                    parent.updateSwimmers();
+                }
                 else {
                     dpp.UpdateSwimmer(swimmer);
+                    parent.UpdateSwimmerAt(swimmer, updateIdx);
                 }
-                parent.UpdateSwimmerAt(swimmer, updateIdx);
+                
                 this.Close();
             }
             catch (Exception ex) {

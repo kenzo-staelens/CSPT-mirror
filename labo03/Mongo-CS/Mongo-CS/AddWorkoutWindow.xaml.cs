@@ -22,11 +22,13 @@ namespace EF_Core {
         public MainWindow parent;
         public IDataPreProcessor dpp;
         public Workout workout;
+        private int updateIdx;
         public AddWorkoutWindow() {
             InitializeComponent();
+            updateIdx = -1;
         }
 
-        public void SetWorkout(Workout workout) {
+        public void SetWorkout(Workout workout, int idx) {
             this.workout = workout;
             coaches.SelectedItem = workout.Coach;
             type.SelectedItem = workout.Type;
@@ -35,6 +37,7 @@ namespace EF_Core {
             hours.Text = workout.Schedule.Hour.ToString();
             minutes.Text = workout.Schedule.Minute.ToString();
             durationTxt.Text = workout.Duration.ToString();
+            updateIdx = idx;
         }
 
         private void clickOk(object sender, RoutedEventArgs e) {
@@ -61,11 +64,15 @@ namespace EF_Core {
                 workout.Duration = duration;
                 workout.Schedule = dt;
 
-                if(insert) dpp.AddWorkout(workout);
+                if (insert) {
+                    dpp.AddWorkout(workout);
+                    parent.workouts.Add(workout);
+                    parent.updateWorkouts();
+                }
                 else {
                     dpp.UpdateWorkout(workout);
+                    parent.UpdateWorkoutAt(workout, updateIdx);
                 }
-                parent.workouts.Add(workout);
                 this.Close();
             }
             catch (Exception ex) {
