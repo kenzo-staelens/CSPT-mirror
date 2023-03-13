@@ -27,6 +27,7 @@ namespace Logicalaag {
         }
 
         public void MergeWorkouts(List<Swimmer> swimmers, List<Workout> workouts) {
+            //hier waren wat issues met references
             foreach (var swimmer in swimmers) {
                 foreach (var workout in workouts) {
                     for (int i = 0; i < swimmer.Workouts.Count(); i++) {

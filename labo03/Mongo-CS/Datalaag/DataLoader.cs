@@ -46,6 +46,8 @@ namespace Datalaag {
         }
 
         private void SetAutoIncrements() {
+            //dit kon ook met lin
+            //verkeerde file
             _nextSwimmerId = (from swimmer in GetSwimmers() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
             _nextCoachId = (from swimmer in GetCoaches() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
             _nextWorkoutId = (from swimmer in GetWorkouts() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;

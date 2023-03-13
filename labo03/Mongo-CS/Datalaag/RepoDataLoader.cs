@@ -51,6 +51,11 @@ namespace Datalaag {
         }
 
         private void SetAutoIncrements() {
+            //het gevaar door duit enkel te doen bij de start is dat als er toch een tweed eDB connectie is, dat dit kan mislopen
+            //begrijp ik, mogelijks kan dit dan ook bij elke insert gedaan worden moest dit nodig zijn, hier echter niet want er is maar 1 connectie op dit moment
+            //trouwens, blijkbaar heb ik nog overal swimmer laten staan bij copy/paste dit moet natuurlijk zijn per tabel
+            //Je kan ook gebruik maken van een IDGenerator
+            //is trouwens linq -> KLOPT
             _nextSwimmerId = (from swimmer in GetSwimmers() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
             _nextCoachId = (from swimmer in GetCoaches() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
             _nextWorkoutId = (from swimmer in GetWorkouts() orderby swimmer.Id descending select swimmer.Id).FirstOrDefault() + 1;
