@@ -1,7 +1,69 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using System.Xml.Serialization;
 
 namespace webapi.Entities {
-    public class SwimmingClubContext : IdentityDbContext {
+    public class SwimmingClubContext : IdentityDbContext<
+            Member,
+            Role,
+            Guid,
+            IdentityUserClaim<Guid>,
+            MemberRole,
+            IdentityUserLogin<Guid>,
+            IdentityRoleClaim<Guid>,
+            IdentityUserToken<Guid>
+        > {
 
+        DbSet<Swimmer> Swimmers { get; set; }
+        DbSet<Coach> Coaches { get; set; }
+        DbSet<Attendance> Attendances { get; set; }
+        DbSet<Workout> Workouts { get; set; }
+        DbSet<Race> Races { get; set; }
+        DbSet<Result> Results { get; set; }
+        DbSet<SwimmingPool> SwimmingPools { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+            optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=test;Integrated Security=SSPI;AttachDBFilename=C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\swimmingclub\\webapi\\test.mdf");
+            base.OnConfiguring(optionsBuilder);
+        }
+        protected override void OnModelCreating(ModelBuilder builder) {
+            builder.Entity<Attendance>().HasKey(x => new { x.SwimmerId, x.WorkoutId });
+            builder.Entity<Result>().HasKey(x => new { x.SwimmerId, x.RaceId});
+            builder.Entity<Race>().HasKey(x => x.Id);
+            builder.Entity<SwimmingPool>().HasKey(x => x.Id);
+            builder.Entity<Workout>().HasKey(x => x.Id);
+
+            builder.Entity<Member>().HasMany(x => x.MemberRoles).WithOne(x=>x.Member).IsRequired().HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Role>().HasMany(x => x.MemberRoles).WithOne(x=>x.Role).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Workout>().HasMany(x => x.Attendances).WithOne(x => x.Workout).IsRequired().HasForeignKey(x => x.SwimmerId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Swimmer>().HasMany(x => x.Attendances).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.WorkoutId).OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Swimmer>().HasMany(x => x.Results).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.RaceId);
+            builder.Entity<Race>().HasMany(x => x.Results).WithOne(x => x.Race).IsRequired().HasForeignKey(x => x.SwimmerId);
+
+            builder.Entity<SwimmingPool>().HasMany(x => x.Races);
+            builder.Entity<SwimmingPool>().HasMany(x => x.Workouts);
+            builder.Entity<Coach>().HasMany(x => x.Workouts);
+
+            //required fields
+            //builder.Entity<Coach>().Property(x => x.Id).IsRequired();
+            //multiple fields
+            //builder.Entity<Coach>().Property(x => new { x.FirstName, x.LastName }).IsRequired();
+            
+            //voorbeelden voor unique fields
+            /*
+            1 kolom
+            builder.Entity<Coach>().HasIndex(x => x.Id).IsUnique(true);
+            
+            composite kolommen
+            builder.Entity<Coach>().HasIndex(x=> new { x.FirstName, x.LastName}).IsUnique(true);
+            
+             */
+
+            base.OnModelCreating(builder);
+        }
     }
 }

@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 namespace webapi.Entities {
     public class SwimmingPool {
-
-        [Key]
-        [Required]
         public Guid Id { get; set; }
 
         [StringLength(50)]

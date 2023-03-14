@@ -1,16 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webapi.Entities {
-    public class MemberRole {
-        [ForeignKey("Member")]
-        [Required]
-        public Guid MemberId { get; set; }
-        public Member Member { get; set; }
+    public class MemberRole : IdentityUserRole<Guid>{
+        public virtual Member Member { get; set; }
+        public virtual Role Role { get; set; }
 
-        [ForeignKey("Role")]
-        [Required]
-        public Guid RoleId { get; set; }
-        public Role Role { get; set; }
     }
 }

@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webapi.Entities {
     public class Race {
-        [Key]
-        [Required]
         public Guid Id { get; set; }
 
         [ForeignKey("SwimmingPool")]
@@ -28,6 +26,6 @@ namespace webapi.Entities {
         [Required]
         public Gender Gender { get; set; }
 
-        public ICollection<Result> Results { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
     }
 }

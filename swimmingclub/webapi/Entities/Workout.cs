@@ -4,18 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace webapi.Entities {
     public class Workout {
-        [Key]
         [Required]
         public Guid Id { get; set; }
 
-        [ForeignKey("Coach")]
-        [Required]
-        public Guid CoachId { get; set; }
-        public Coach Coach { get; set; }
 
-        [ForeignKey("SwimmingPool")]
         [Required]
-        public Guid SwimmingPoolId { get; set; }
+        public virtual Coach Coach { get; set; }
+
+        [Required]
         public SwimmingPool SwimmingPool { get; set; }
 
         [Required]
@@ -28,6 +24,6 @@ namespace webapi.Entities {
         [Required]
         public int Duration { get; set; }
 
-        public ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

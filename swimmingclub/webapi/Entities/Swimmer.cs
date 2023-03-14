@@ -5,7 +5,7 @@ namespace webapi.Entities {
         [Required]
         public int FinalPoints { get; set; }
 
-        public ICollection<Attendance> Attendances { get; set; }
-        public ICollection<Result> Results { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<Result> Results { get; set; }
     }
 }
