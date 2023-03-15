@@ -292,7 +292,7 @@ namespace webapi.Migrations
                         column: x => x.SwimmerId,
                         principalTable: "Workouts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

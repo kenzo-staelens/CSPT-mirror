@@ -448,7 +448,7 @@ namespace webapi.Migrations
                     b.HasOne("webapi.Entities.Workout", "Workout")
                         .WithMany("Attendances")
                         .HasForeignKey("SwimmerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Entities.Swimmer", "Swimmer")

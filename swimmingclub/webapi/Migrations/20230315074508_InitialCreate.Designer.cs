@@ -12,7 +12,7 @@ using webapi.Entities;
 namespace webapi.Migrations
 {
     [DbContext(typeof(SwimmingClubContext))]
-    [Migration("20230314110105_InitialCreate")]
+    [Migration("20230315074508_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -451,7 +451,7 @@ namespace webapi.Migrations
                     b.HasOne("webapi.Entities.Workout", "Workout")
                         .WithMany("Attendances")
                         .HasForeignKey("SwimmerId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Entities.Swimmer", "Swimmer")
