@@ -6,12 +6,12 @@ namespace webapi.Entities {
         [ForeignKey("Swimmer")]
         [Required]
         public Guid SwimmerId { get; set; }
-        public Swimmer Swimmer { get; set; }
+        public virtual Swimmer Swimmer { get; set; }
 
         [ForeignKey("Workout")]
         [Required]
         public Guid WorkoutId { get; set; }
-        public Workout Workout { get; set; }
+        public virtual Workout Workout { get; set; }
 
         [Required]
         public bool Present { get; set; }

@@ -24,10 +24,11 @@ namespace webapi.Entities {
         DbSet<Result> Results { get; set; }
         DbSet<SwimmingPool> SwimmingPools { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+        /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=test;Integrated Security=SSPI;AttachDBFilename=C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\swimmingclub\\webapi\\test.mdf");
             base.OnConfiguring(optionsBuilder);
-        }
+        }*/
+
         protected override void OnModelCreating(ModelBuilder builder) {
             builder.Entity<Attendance>().HasKey(x => new { x.SwimmerId, x.WorkoutId });
             builder.Entity<Result>().HasKey(x => new { x.SwimmerId, x.RaceId});
@@ -48,20 +49,7 @@ namespace webapi.Entities {
             builder.Entity<SwimmingPool>().HasMany(x => x.Workouts);
             builder.Entity<Coach>().HasMany(x => x.Workouts);
 
-            //required fields
-            //builder.Entity<Coach>().Property(x => x.Id).IsRequired();
-            //multiple fields
-            //builder.Entity<Coach>().Property(x => new { x.FirstName, x.LastName }).IsRequired();
-            
-            //voorbeelden voor unique fields
-            /*
-            1 kolom
-            builder.Entity<Coach>().HasIndex(x => x.Id).IsUnique(true);
-            
-            composite kolommen
-            builder.Entity<Coach>().HasIndex(x=> new { x.FirstName, x.LastName}).IsUnique(true);
-            
-             */
+            builder.Entity<SwimmingPool>().HasIndex(x => x.Name).IsUnique();
 
             base.OnModelCreating(builder);
         }

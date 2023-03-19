@@ -9,7 +9,7 @@ namespace webapi.Entities {
         [ForeignKey("SwimmingPool")]
         [Required]
         public Guid SwimmingPoolId { get; set; }
-        public SwimmingPool SwimmingPool { get; set; }
+        public virtual SwimmingPool SwimmingPool { get; set; }
 
         [Required]
         public DateTime Schedule { get; set; }

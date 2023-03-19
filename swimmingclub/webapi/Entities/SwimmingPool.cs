@@ -23,7 +23,7 @@ namespace webapi.Entities {
         [Required]
         public LaneLength LaneLength { get; set; }
 
-        public ICollection<Workout> Workouts { get; set; }
-        public ICollection<Race> Races { get; set; }
+        public virtual ICollection<Workout> Workouts { get; set; }
+        public virtual ICollection<Race> Races { get; set; }
     }
 }

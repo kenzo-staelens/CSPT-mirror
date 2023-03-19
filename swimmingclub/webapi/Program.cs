@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using webapi.Entities;
 
 namespace webapi {
     public class Program {
@@ -10,6 +12,9 @@ namespace webapi {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<SwimmingClubContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SwimmingClubContext")));
+            builder.Services.AddIdentity<Member, Role>().AddEntityFrameworkStores<SwimmingClubContext>();
 
             var app = builder.Build();
 
