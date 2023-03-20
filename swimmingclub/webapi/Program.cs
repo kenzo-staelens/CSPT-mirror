@@ -16,6 +16,7 @@ namespace webapi {
             builder.Services.AddDbContext<SwimmingClubContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SwimmingClubContext")));
             builder.Services.AddIdentity<Member, Role>().AddEntityFrameworkStores<SwimmingClubContext>();
 
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
