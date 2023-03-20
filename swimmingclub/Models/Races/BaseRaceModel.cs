@@ -11,6 +11,7 @@ using Models.Results;
 
 namespace Models.Races {
     public class BaseRaceModel {
+        public Guid Id { get; set; }
         [Required]
         public Guid SwimmingPoolId { get; set; }
         [ForeignKey("SwimmingPoolId")]

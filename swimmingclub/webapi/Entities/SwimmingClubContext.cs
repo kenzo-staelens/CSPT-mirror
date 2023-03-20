@@ -24,6 +24,8 @@ namespace webapi.Entities {
         DbSet<Result> Results { get; set; }
         DbSet<SwimmingPool> SwimmingPools { get; set; }
 
+        public SwimmingClubContext(DbContextOptions<SwimmingClubContext> options) : base(options) { }
+
         /*protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlServer("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=test;Integrated Security=SSPI;AttachDBFilename=C:\\Users\\User\\Desktop\\2223-cspt-staelenskenzo\\swimmingclub\\webapi\\test.mdf");
             base.OnConfiguring(optionsBuilder);

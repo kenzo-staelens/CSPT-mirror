@@ -10,19 +10,20 @@ namespace webapi.Repositories {
         }
 
         public async Task<GetCoachModel> GetCoach(Guid id) {
-            GetCoachModel coach = new();
+            GetCoachModel coach = new() { FirstName="abcdef"};
             return coach;
             throw new NotImplementedException();
         }
 
         public async Task<List<GetCoachModel>> GetCoaches() {
-            List<GetCoachModel> coaches = new();
+            List<GetCoachModel> coaches = new List<GetCoachModel>() {};
+            coaches.Add(new GetCoachModel() { FirstName = "abcdef" });
             return coaches;
             throw new NotImplementedException();
         }
 
         public async Task<GetCoachModel> PostCoach(PostCoachModel postCoachModel) {
-            GetCoachModel coach = new();
+            GetCoachModel coach = new() { FirstName = "abcdef" };
             return coach;
             throw new NotImplementedException();
         }

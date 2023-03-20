@@ -12,6 +12,8 @@ using System.Threading.Tasks;
 
 namespace Models.Workouts {
     public class BaseWorkoutModel {
+
+        public Guid Id { get; set; }
         [Required]
         public Guid CoachId { get; set; }
         [ForeignKey("CoachId")]

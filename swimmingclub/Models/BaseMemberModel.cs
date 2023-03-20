@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Models {
     public class BaseMemberModel {
+        public Guid Id { get; set; }
+
         [StringLength(50, MinimumLength = 2)]
         [Required]
         [RegularExpression(@"^[A-Z][a-z ]+$")]

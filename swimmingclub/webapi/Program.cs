@@ -1,3 +1,4 @@
+using Extensions;
 using Microsoft.EntityFrameworkCore;
 using webapi.Entities;
 
@@ -16,6 +17,7 @@ namespace webapi {
             builder.Services.AddDbContext<SwimmingClubContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SwimmingClubContext")));
             builder.Services.AddIdentity<Member, Role>().AddEntityFrameworkStores<SwimmingClubContext>();
 
+            builder.Services.AddRepositoryServices(builder.Configuration);
 
             var app = builder.Build();
 

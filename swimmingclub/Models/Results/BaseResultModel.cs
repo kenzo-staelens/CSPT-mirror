@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 
 namespace Models.Results {
     public class BaseResultModel {
+        public Guid Id { get; set; }
+
         [Required]
         public Guid SwimmerId { get; set; }
         [ForeignKey("SwimmerId")]

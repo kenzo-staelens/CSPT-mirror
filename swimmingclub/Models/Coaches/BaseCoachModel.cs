@@ -9,7 +9,7 @@ using Models.Workouts;
 
 namespace Models.Coaches {
     public class BaseCoachModel : BaseMemberModel {
-        
+
         [Required]
         public Level Level { get; set; }
 

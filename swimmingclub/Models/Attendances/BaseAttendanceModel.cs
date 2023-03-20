@@ -10,6 +10,8 @@ using Models.Workouts;
 
 namespace Models.Attendances {
     public class BaseAttendanceModel {
+        public Guid Id { get; set; }
+
         [Required]
         public Guid SwimmerId { get; set; }
         [ForeignKey("SwimmerId")]
