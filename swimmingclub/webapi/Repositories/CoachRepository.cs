@@ -10,22 +10,23 @@ namespace webapi.Repositories {
         }
 
         public async Task<GetCoachModel> GetCoach(Guid id) {
-            GetCoachModel coach = new() { FirstName="abcdef"};
-            return coach;
-            throw new NotImplementedException();
+            return (from r in _context.Coaches where r.Id == id select new GetCoachModel() {
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                DateOfBirth = r.DateOfBirth,
+                Level = r.Level,
+                Gender = r.Gender
+            }).FirstOrDefault();
+            
         }
 
         public async Task<List<GetCoachModel>> GetCoaches() {
-            List<GetCoachModel> coaches = new List<GetCoachModel>() {};
-            coaches.Add(new GetCoachModel() { FirstName = "abcdef" });
-            return coaches;
-            throw new NotImplementedException();
+            return (from r in _context.Coaches select new GetCoachModel() { }).ToList();
         }
 
         public async Task<GetCoachModel> PostCoach(PostCoachModel postCoachModel) {
             GetCoachModel coach = new() { FirstName = "abcdef" };
             return coach;
-            throw new NotImplementedException();
         }
     }
 }

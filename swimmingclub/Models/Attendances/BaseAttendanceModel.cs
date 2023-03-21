@@ -10,18 +10,11 @@ using Models.Workouts;
 
 namespace Models.Attendances {
     public class BaseAttendanceModel {
-        public Guid Id { get; set; }
+        public string SwimmerFirstName { get; set; }
+        public string SwimmerLastName { get; set; }
 
-        [Required]
-        public Guid SwimmerId { get; set; }
-        [ForeignKey("SwimmerId")]
-
-        public virtual BaseSwimmerModel Swimmer { get; set; }
-
-        [Required]
-        public Guid WorkoutId { get; set; }
-        [ForeignKey("WorkoutId")]
-        public virtual BaseWorkoutModel Workout { get; set; }
+        public DateTime Schedule { get; set; }
+        public string SwimmingPoolName { get; set; }
 
         [Required]
         public bool Present { get; set; }

@@ -21,16 +21,18 @@ namespace webapi.Controllers {
 
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetSwimmingPoolModel>> GetSwimmingPool(Guid id) {
-            return await _repo.GetSwimmingPool(id);
+            GetSwimmingPoolModel swimmingpool =  await _repo.GetSwimmingPool(id);
+            return swimmingpool==null? new StatusCodeResult(StatusCodes.Status404NotFound):swimmingpool;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetSwimmingPoolModel> PostSwimmingPool(PostSwimmingPoolModel SwimmingPool) {
-            SwimmingPool.Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostSwimmingPool), new { id = SwimmingPool.Id }, SwimmingPool);
+        public async Task<ActionResult<GetSwimmingPoolModel>> PostSwimmingPool(PostSwimmingPoolModel SwimmingPool) {
+            var getModel = await _repo.PostSwimmingPool(SwimmingPool);
+            return CreatedAtAction(nameof(PostSwimmingPool), new { id = getModel.Id }, getModel);
         }
     }
 }

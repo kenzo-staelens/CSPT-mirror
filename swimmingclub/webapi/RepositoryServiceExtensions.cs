@@ -14,6 +14,7 @@ namespace Extensions {
             services.AddTransient<ICoachRepository, CoachRepository>();
             services.AddTransient<IRaceRepository, RaceRepository>();
             services.AddTransient<IResultRepository, ResultRepository>();
+            services.AddTransient<IRoleRepository, RoleRepository>();
             services.AddTransient<ISwimmerRepository, SwimmerRepository>();
             services.AddTransient<ISwimmingPoolRepository, SwimmingPoolRepository>();
             services.AddTransient<IWorkoutRepository, WorkoutRepository>();

@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 
 namespace Models.SwimmingPools {
     public class GetSwimmingPoolModel : BaseSwimmingPoolModel{
+        public Guid Id { get; set; }
     }
 }

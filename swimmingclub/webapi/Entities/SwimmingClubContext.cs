@@ -16,13 +16,13 @@ namespace webapi.Entities {
             IdentityUserToken<Guid>
         > {
 
-        DbSet<Swimmer> Swimmers { get; set; }
-        DbSet<Coach> Coaches { get; set; }
-        DbSet<Attendance> Attendances { get; set; }
-        DbSet<Workout> Workouts { get; set; }
-        DbSet<Race> Races { get; set; }
-        DbSet<Result> Results { get; set; }
-        DbSet<SwimmingPool> SwimmingPools { get; set; }
+        public DbSet<Swimmer> Swimmers { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
+        public DbSet<Workout> Workouts { get; set; }
+        public DbSet<Race> Races { get; set; }
+        public DbSet<Result> Results { get; set; }
+        public DbSet<SwimmingPool> SwimmingPools { get; set; }
 
         public SwimmingClubContext(DbContextOptions<SwimmingClubContext> options) : base(options) { }
 

@@ -19,18 +19,20 @@ namespace webapi.Controllers {
             return await _repo.GetResults();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{raceid}/{swimmerid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetResultModel>> GetResult(Guid id) {
-            return await _repo.GetResult(id);
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<GetResultModel>> GetResult(Guid raceid, Guid swimmerid) {
+            GetResultModel result =  await _repo.GetResult(raceid,swimmerid);
+            return result==null?new StatusCodeResult(StatusCodes.Status404NotFound):result;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<GetResultModel> PostResult(PostResultModel Result) {
-            Result.Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostResult), new { id = Result.Id }, Result);
+            var Id = new Guid("12345678-1234-1234-1234-1234567890ab");
+            return CreatedAtAction(nameof(PostResult), new { id = Id }, Result);
         }
     }
 }

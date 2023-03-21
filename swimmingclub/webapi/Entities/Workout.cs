@@ -11,8 +11,8 @@ namespace webapi.Entities {
         [Required]
         public virtual Coach Coach { get; set; }
 
-        [Required]
-        public SwimmingPool SwimmingPool { get; set; }
+        [Required] //dit is blijkbaar nog een navigation
+        public virtual SwimmingPool SwimmingPool { get; set; }
 
         [Required]
         public DateTime Schedule { get; set; }

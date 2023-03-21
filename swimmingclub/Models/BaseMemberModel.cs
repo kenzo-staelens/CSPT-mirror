@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Models {
     public class BaseMemberModel {
-        public Guid Id { get; set; }
+        //public Guid Id { get; set; }
 
         [StringLength(50, MinimumLength = 2)]
         [Required]

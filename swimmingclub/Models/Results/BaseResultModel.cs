@@ -11,18 +11,15 @@ using System.Threading.Tasks;
 
 namespace Models.Results {
     public class BaseResultModel {
-        public Guid Id { get; set; }
+        [Required]
+        public string SwimmerFirstName { get; set; }
+        [Required]
+        public string SwimmerLastName { get; set; }
 
         [Required]
-        public Guid SwimmerId { get; set; }
-        [ForeignKey("SwimmerId")]
-        public virtual BaseSwimmerModel Swimmer { get; set; }
-
-
+        public string SwimmingPoolName { get; set; }
         [Required]
-        public Guid RaceId { get; set; }
-        [ForeignKey("RaceId")]
-        public virtual BaseRaceModel Race { get; set; }
+        public DateTime Schedule { get; set; }
 
         [RegularExpression(@"^[0-9]{1,2}(:[0-9]{1,2}){2}$")]
         [Required]

@@ -11,8 +11,6 @@ using System.Threading.Tasks;
 
 namespace Models.SwimmingPools {
     public class BaseSwimmingPoolModel {
-        public Guid Id { get; set; }
-
         [StringLength(50)]
         [Required]
         public string Name { get; set; }
@@ -30,8 +28,5 @@ namespace Models.SwimmingPools {
 
         [Required]
         public LaneLength LaneLength { get; set; }
-
-        public virtual ICollection<BaseWorkoutModel> Workouts { get; set; }
-        public virtual ICollection<BaseRaceModel> Races { get; set; }
     }
 }

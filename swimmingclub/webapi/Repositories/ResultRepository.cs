@@ -8,22 +8,31 @@ namespace webapi.Repositories {
         public ResultRepository(SwimmingClubContext context) {
             _context = context;
         }
-        public async Task<GetResultModel> GetResult(Guid id) {
-            GetResultModel result = new();
-            return result;
-            throw new NotImplementedException();
+        public async Task<GetResultModel> GetResult(Guid raceid, Guid swimmerid) {
+            return (from r in _context.Results where r.RaceId == raceid && r.SwimmerId == swimmerid select new GetResultModel() {
+                CurrentPersonalBest = r.CurrentPersonalBest,
+                RaceResult = r.RaceResult,
+                SwimmerFirstName= r.Swimmer.FirstName,
+                SwimmerLastName = r.Swimmer.LastName,
+                Schedule = r.Race.Schedule,
+                SwimmingPoolName = r.Race.SwimmingPool.Name
+            }).FirstOrDefault();
         }
 
         public async Task<List<GetResultModel>> GetResults() {
-            List<GetResultModel> results = new();
-            return results;
-            throw new NotImplementedException();
+            return (from r in _context.Results select new GetResultModel() {
+                CurrentPersonalBest = r.CurrentPersonalBest,
+                RaceResult = r.RaceResult,
+                SwimmerFirstName = r.Swimmer.FirstName,
+                SwimmerLastName = r.Swimmer.LastName,
+                Schedule = r.Race.Schedule,
+                SwimmingPoolName = r.Race.SwimmingPool.Name
+            }).ToList();
         }
 
         public async Task<GetResultModel> PostResult(PostResultModel postResultModel) {
             GetResultModel result = new();
             return result;
-            throw new NotImplementedException();
         }
     }
 }

@@ -12,17 +12,13 @@ using System.Threading.Tasks;
 
 namespace Models.Workouts {
     public class BaseWorkoutModel {
-
-        public Guid Id { get; set; }
         [Required]
-        public Guid CoachId { get; set; }
-        [ForeignKey("CoachId")]
-        public virtual BaseCoachModel Coach { get; set; }
+        public string CoachFirstName { get; set; }
+        [Required]
+        public string CoachLastName { get; set; }
 
         [Required]
-        public  Guid SwimmingPoolId { get; set; }
-        [ForeignKey("SwimmingPoolId")]
-        public BaseSwimmerModel SwimmingPool { get; set; }
+        public string SwimmingPoolName { get; set; }
 
         [Required]
         public DateTime Schedule { get; set; }
@@ -33,7 +29,5 @@ namespace Models.Workouts {
         [Range(0, int.MaxValue)]
         [Required]
         public int Duration { get; set; }
-
-        public virtual ICollection<BaseAttendanceModel> Attendances { get; set; }
     }
 }

@@ -20,18 +20,20 @@ namespace webapi.Controllers {
             return await _repo.GetAttendances();
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{swimmerid}/{workoutid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetAttendanceModel>> GetAttendance(Guid id) {
-            return await _repo.GetAttendance(id);
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<GetAttendanceModel>> GetAttendance(Guid swimmerid, Guid workoutid) {
+            GetAttendanceModel attendance = await _repo.GetAttendance(swimmerid, workoutid);
+            return attendance==null?new StatusCodeResult(StatusCodes.Status404NotFound): attendance;
         }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<GetAttendanceModel> PostAttendance(PostAttendanceModel attendance) {
-            attendance.Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostAttendance), new { id = attendance.Id }, attendance);
+            var Id = new Guid("12345678-1234-1234-1234-1234567890ab");
+            return CreatedAtAction(nameof(PostAttendance), new { id = Id }, attendance);
         }
     }
 }

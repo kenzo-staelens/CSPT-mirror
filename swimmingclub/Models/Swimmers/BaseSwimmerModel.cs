@@ -12,8 +12,5 @@ namespace Models.Swimmers {
     public class BaseSwimmerModel : BaseMemberModel {
         [Required]
         public int FinalPoints { get; set; }
-
-        public virtual ICollection<BaseAttendanceModel> Attendances { get; set; }
-        public virtual ICollection<BaseResultModel> Results { get; set; }
     }
 }

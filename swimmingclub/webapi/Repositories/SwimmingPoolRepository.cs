@@ -10,21 +10,51 @@ namespace webapi.Repositories {
         }
 
         public async Task<GetSwimmingPoolModel> GetSwimmingPool(Guid id) {
-            GetSwimmingPoolModel swimmingpool = new();
-            return swimmingpool;
-            throw new NotImplementedException();
+            return (from r in _context.SwimmingPools where r.Id == id select new GetSwimmingPoolModel() {
+                Name = r.Name,
+                Street = r.Street,
+                City = r.City,
+                LaneLength = r.LaneLength,
+                ZipCode = r.ZipCode
+            }).FirstOrDefault();
         }
 
         public async Task<List<GetSwimmingPoolModel>> GetSwimmingPools() {
-            List<GetSwimmingPoolModel> swimmingpools = new();
-            return swimmingpools;
-            throw new NotImplementedException();
+            return (from r in _context.SwimmingPools select new GetSwimmingPoolModel() {
+                Name = r.Name,
+                Street = r.Street,
+                City = r.City,
+                LaneLength = r.LaneLength,
+                ZipCode = r.ZipCode
+            }).ToList();
         }
 
-        public async Task<GetSwimmingPoolModel> PostSwimmingPool(PostSwimmingPoolModel postSwimmingPoolModel) {
-            GetSwimmingPoolModel swimmingpool = new();
-            return swimmingpool;
-            throw new NotImplementedException();
+        public async Task<GetSwimmingPoolModel> PostSwimmingPool(PostSwimmingPoolModel model) {
+            Guid id = Guid.NewGuid();
+            SwimmingPool pool = new SwimmingPool() {
+                Id = id,
+                City = model.City,
+                ZipCode = model.ZipCode,
+                LaneLength = model.LaneLength,
+                Name = model.Name,
+                Street = model.Street,
+                Races = new List<Race>(),
+                Workouts = new List<Workout>()
+            };
+
+            _context.SwimmingPools.Add(pool);
+            await _context.SaveChangesAsync();
+
+            GetSwimmingPoolModel retmodel = new GetSwimmingPoolModel() {
+                Id = id,
+                City = model.City,
+                ZipCode = model.ZipCode,
+                LaneLength = model.LaneLength,
+                Name = model.Name,
+                Street = model.Street
+            };
+            return retmodel;
+            //return await GetSwimmingPool(id); // doet moeilijk
         }
     }
 }

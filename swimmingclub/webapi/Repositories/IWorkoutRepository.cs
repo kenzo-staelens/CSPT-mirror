@@ -4,5 +4,6 @@ namespace webapi.Repositories {
         Task<List<GetWorkoutModel>> GetWorkouts();
         Task<GetWorkoutModel> GetWorkout(Guid id);
         Task<GetWorkoutModel> PostWorkout(PostWorkoutModel postWorkoutModel);
+        Task<List<GetWorkoutAbsencesModel>> GetWorkoutAbsences();
     }
 }

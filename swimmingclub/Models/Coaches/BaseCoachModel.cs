@@ -12,7 +12,5 @@ namespace Models.Coaches {
 
         [Required]
         public Level Level { get; set; }
-
-        public virtual ICollection<BaseWorkoutModel> Workouts { get; set; }
     }
 }

@@ -9,21 +9,31 @@ namespace webapi.Repositories {
             _context = context;
         }
         public async Task<GetSwimmerModel> GetSwimmer(Guid id) {
-            GetSwimmerModel swimmer = new();
-            return swimmer;
-            throw new NotImplementedException();
+            return (from r in _context.Swimmers where r.Id == id select new GetSwimmerModel() {
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                DateOfBirth = r.DateOfBirth,
+                Gender = r.Gender,
+                FinalPoints = r.FinalPoints
+            })
+            .FirstOrDefault();
+
+            
         }
 
         public async Task<List<GetSwimmerModel>> GetSwimmers() {
-            List<GetSwimmerModel> swimmers = new();
-            return swimmers;
-            throw new NotImplementedException();
+            return (from r in _context.Swimmers select new GetSwimmerModel() {
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                DateOfBirth = r.DateOfBirth,
+                Gender = r.Gender,
+                FinalPoints = r.FinalPoints
+            }).ToList();
         }
 
         public async Task<GetSwimmerModel> PostSwimmer(PostSwimmerModel postSwimmerModel) {
             GetSwimmerModel swimmer = new();
             return swimmer;
-            throw new NotImplementedException();
         }
     }
 }
