@@ -46,7 +46,7 @@ namespace webapi.Repositories {
             };
 
             _context.SwimmingPools.Add(pool);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return await GetSwimmingPool(id);
         }
