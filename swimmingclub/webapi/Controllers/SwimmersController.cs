@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Models.Swimmers;
+using webapi.Entities;
 using webapi.Repositories;
 
 namespace webapi.Controllers {
@@ -30,9 +32,15 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetSwimmerModel> PostSwimmer(PostSwimmerModel Swimmer) {
-            var Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostSwimmer), new { id = Id }, Swimmer);
+        public async Task<ActionResult<GetSwimmerModel>> PostSwimmer(PostSwimmerModel Swimmer) {
+            try {
+                var getModel = await _repo.PostSwimmer(Swimmer);
+                return CreatedAtAction(nameof(PostSwimmer), new { id = getModel.Id }, getModel);
+            }
+            catch (Exception e) {
+                Console.WriteLine(e);
+                return new BadRequestResult();
+            }
         }
     }
 }

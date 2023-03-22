@@ -30,9 +30,13 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<GetSwimmingPoolModel>> PostSwimmingPool(PostSwimmingPoolModel SwimmingPool) {
-            var getModel = await _repo.PostSwimmingPool(SwimmingPool);
-            return CreatedAtAction(nameof(PostSwimmingPool), new { id = getModel.Id }, getModel);
+        public async Task<ActionResult<GetSwimmingPoolModel>> PostSwimmingPool(PostSwimmingPoolModel swimmingPool) {
+            try {
+                var getModel = await _repo.PostSwimmingPool(swimmingPool);
+                return CreatedAtAction(nameof(PostSwimmingPool), new { id = getModel.Id }, getModel);
+            }catch(Exception) {
+                return new BadRequestResult();
+            }
         }
     }
 }

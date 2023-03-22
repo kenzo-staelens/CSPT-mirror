@@ -1,32 +1,61 @@
-﻿using Models.Coaches;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Models.Coaches;
+using Models.Swimmers;
 using webapi.Entities;
 
 namespace webapi.Repositories {
     public class CoachRepository : ICoachRepository {
 
         private SwimmingClubContext _context;
-        public CoachRepository(SwimmingClubContext context) {
+        private UserManager<Member> _userManager;
+        public CoachRepository(SwimmingClubContext context, UserManager<Member> userManager) {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<GetCoachModel> GetCoach(Guid id) {
-            return (from r in _context.Coaches where r.Id == id select new GetCoachModel() {
+            return await (from r in _context.Coaches where r.Id == id select new GetCoachModel() {
+                Id = r.Id,
                 FirstName = r.FirstName,
                 LastName = r.LastName,
                 DateOfBirth = r.DateOfBirth,
                 Level = r.Level,
-                Gender = r.Gender
-            }).FirstOrDefault();
+                Gender = r.Gender,
+                Username = r.UserName,
+                Email = r.Email
+            }).FirstOrDefaultAsync();
             
         }
 
         public async Task<List<GetCoachModel>> GetCoaches() {
-            return (from r in _context.Coaches select new GetCoachModel() { }).ToList();
+            return await (from r in _context.Coaches select new GetCoachModel() {
+                Id = r.Id,
+                FirstName = r.FirstName,
+                LastName = r.LastName,
+                DateOfBirth = r.DateOfBirth,
+                Level = r.Level,
+                Gender = r.Gender,
+                Username = r.UserName,
+                Email = r.Email
+            }).ToListAsync();
         }
 
         public async Task<GetCoachModel> PostCoach(PostCoachModel postCoachModel) {
-            GetCoachModel coach = new() { FirstName = "abcdef" };
-            return coach;
+            Guid id = Guid.NewGuid();
+            Coach coach = new Coach {
+                Id = id,
+                DateOfBirth = postCoachModel.DateOfBirth,
+                FirstName = postCoachModel.FirstName,
+                LastName = postCoachModel.LastName,
+                Gender = postCoachModel.Gender,
+                Level = postCoachModel.Level,
+                UserName = postCoachModel.Username,
+                Email = postCoachModel.Email
+                //UserName = $"{postCoachModel.FirstName} {postCoachModel.LastName}"
+            };
+            IdentityResult result = await _userManager.CreateAsync(coach, postCoachModel.Password);
+            return await GetCoach(id);
         }
     }
 }

@@ -6,5 +6,6 @@ using System.Threading.Tasks;
 
 namespace Models.Roles {
     public class GetRoleModel : BaseRoleModel {
+        public Guid Id { get; set; }
     }
 }

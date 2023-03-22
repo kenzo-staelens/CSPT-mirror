@@ -1,4 +1,5 @@
-﻿using Models.SwimmingPools;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.SwimmingPools;
 using System.Security.Cryptography.Xml;
 using webapi.Entities;
 
@@ -10,23 +11,25 @@ namespace webapi.Repositories {
         }
 
         public async Task<GetSwimmingPoolModel> GetSwimmingPool(Guid id) {
-            return (from r in _context.SwimmingPools where r.Id == id select new GetSwimmingPoolModel() {
+            return await (from r in _context.SwimmingPools where r.Id == id select new GetSwimmingPoolModel() {
+                Id = r.Id,
                 Name = r.Name,
                 Street = r.Street,
                 City = r.City,
                 LaneLength = r.LaneLength,
                 ZipCode = r.ZipCode
-            }).FirstOrDefault();
+            }).FirstOrDefaultAsync();
         }
 
         public async Task<List<GetSwimmingPoolModel>> GetSwimmingPools() {
-            return (from r in _context.SwimmingPools select new GetSwimmingPoolModel() {
+            return await (from r in _context.SwimmingPools select new GetSwimmingPoolModel() {
+                Id=r.Id,
                 Name = r.Name,
                 Street = r.Street,
                 City = r.City,
                 LaneLength = r.LaneLength,
                 ZipCode = r.ZipCode
-            }).ToList();
+            }).ToListAsync();
         }
 
         public async Task<GetSwimmingPoolModel> PostSwimmingPool(PostSwimmingPoolModel model) {
@@ -43,18 +46,9 @@ namespace webapi.Repositories {
             };
 
             _context.SwimmingPools.Add(pool);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
 
-            GetSwimmingPoolModel retmodel = new GetSwimmingPoolModel() {
-                Id = id,
-                City = model.City,
-                ZipCode = model.ZipCode,
-                LaneLength = model.LaneLength,
-                Name = model.Name,
-                Street = model.Street
-            };
-            return retmodel;
-            //return await GetSwimmingPool(id); // doet moeilijk
+            return await GetSwimmingPool(id);
         }
     }
 }

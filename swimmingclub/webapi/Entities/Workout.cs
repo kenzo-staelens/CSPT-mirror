@@ -9,9 +9,13 @@ namespace webapi.Entities {
 
 
         [Required]
+        [ForeignKey("Coach")]
+        public Guid CoachId { get; set; }
         public virtual Coach Coach { get; set; }
 
         [Required] //dit is blijkbaar nog een navigation
+        [ForeignKey("SwimmingPool")]
+        public Guid SwimmingPoolId { get; set; }
         public virtual SwimmingPool SwimmingPool { get; set; }
 
         [Required]

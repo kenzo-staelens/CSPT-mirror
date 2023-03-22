@@ -141,7 +141,9 @@ namespace webapi.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MemberId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RoleId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -151,25 +153,25 @@ namespace webapi.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_UserId",
-                        column: x => x.UserId,
+                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId1",
+                        column: x => x.RoleId1,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetUsers_RoleId",
-                        column: x => x.RoleId,
+                        name: "FK_AspNetUserRoles_AspNetUsers_MemberId",
+                        column: x => x.MemberId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -256,14 +258,14 @@ namespace webapi.Migrations
                 {
                     table.PrimaryKey("PK_Results", x => new { x.SwimmerId, x.RaceId });
                     table.ForeignKey(
-                        name: "FK_Results_AspNetUsers_RaceId",
-                        column: x => x.RaceId,
+                        name: "FK_Results_AspNetUsers_SwimmerId",
+                        column: x => x.SwimmerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Results_Races_SwimmerId",
-                        column: x => x.SwimmerId,
+                        name: "FK_Results_Races_RaceId",
+                        column: x => x.RaceId,
                         principalTable: "Races",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -282,14 +284,14 @@ namespace webapi.Migrations
                 {
                     table.PrimaryKey("PK_Attendances", x => new { x.SwimmerId, x.WorkoutId });
                     table.ForeignKey(
-                        name: "FK_Attendances_AspNetUsers_WorkoutId",
-                        column: x => x.WorkoutId,
+                        name: "FK_Attendances_AspNetUsers_SwimmerId",
+                        column: x => x.SwimmerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Attendances_Workouts_SwimmerId",
-                        column: x => x.SwimmerId,
+                        name: "FK_Attendances_Workouts_WorkoutId",
+                        column: x => x.WorkoutId,
                         principalTable: "Workouts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -318,9 +320,19 @@ namespace webapi.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_MemberId",
+                table: "AspNetUserRoles",
+                column: "MemberId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserRoles_RoleId1",
+                table: "AspNetUserRoles",
+                column: "RoleId1");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
@@ -348,6 +360,12 @@ namespace webapi.Migrations
                 name: "IX_Results_RaceId",
                 table: "Results",
                 column: "RaceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SwimmingPools_Name",
+                table: "SwimmingPools",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Workouts_CoachId",

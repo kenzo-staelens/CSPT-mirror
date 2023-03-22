@@ -14,8 +14,13 @@ namespace webapi {
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<SwimmingClubContext>(options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SwimmingClubContext")));
-            builder.Services.AddIdentity<Member, Role>().AddEntityFrameworkStores<SwimmingClubContext>();
+            builder.Services.AddDbContext<SwimmingClubContext>(
+                options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("SwimmingClubContext"))
+            );
+
+            builder.Services.AddIdentity<Member, Role>(
+                options => options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_ "
+            ).AddEntityFrameworkStores<SwimmingClubContext>();
 
             builder.Services.AddRepositoryServices(builder.Configuration);
 

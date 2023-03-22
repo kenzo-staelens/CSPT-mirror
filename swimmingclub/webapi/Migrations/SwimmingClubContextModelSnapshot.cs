@@ -234,9 +234,19 @@ namespace webapi.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("UserId", "RoleId");
 
+                    b.HasIndex("MemberId");
+
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
 
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
@@ -451,13 +461,13 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.Entities.Attendance", b =>
                 {
-                    b.HasOne("webapi.Entities.Workout", "Workout")
+                    b.HasOne("webapi.Entities.Swimmer", "Swimmer")
                         .WithMany("Attendances")
                         .HasForeignKey("SwimmerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("webapi.Entities.Swimmer", "Swimmer")
+                    b.HasOne("webapi.Entities.Workout", "Workout")
                         .WithMany("Attendances")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -472,24 +482,24 @@ namespace webapi.Migrations
                 {
                     b.HasOne("webapi.Entities.Member", "Member")
                         .WithMany("MemberRoles")
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("webapi.Entities.Role", "Role")
+                        .WithMany("MemberRoles")
+                        .HasForeignKey("RoleId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("webapi.Entities.Member", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("webapi.Entities.Role", "Role")
-                        .WithMany("MemberRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -512,13 +522,13 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.Entities.Result", b =>
                 {
-                    b.HasOne("webapi.Entities.Swimmer", "Swimmer")
+                    b.HasOne("webapi.Entities.Race", "Race")
                         .WithMany("Results")
                         .HasForeignKey("RaceId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("webapi.Entities.Race", "Race")
+                    b.HasOne("webapi.Entities.Swimmer", "Swimmer")
                         .WithMany("Results")
                         .HasForeignKey("SwimmerId")
                         .OnDelete(DeleteBehavior.Cascade)

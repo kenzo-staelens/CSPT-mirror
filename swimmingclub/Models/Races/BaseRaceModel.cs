@@ -11,12 +11,6 @@ using Models.Results;
 
 namespace Models.Races {
     public class BaseRaceModel {
-        //public Guid Id { get; set; }
-        //[Required]
-        //public Guid SwimmingPoolId { get; set; }
-        //[ForeignKey("SwimmingPoolId")]
-        //public virtual BaseSwimmingPoolModel SwimmingPool { get; set; }
-
         [Required]
         public DateTime Schedule { get; set; }
 
@@ -31,7 +25,5 @@ namespace Models.Races {
 
         [Required]
         public Gender Gender { get; set; }
-
-        //public virtual ICollection<BaseResultModel> Results { get; set; }
     }
 }

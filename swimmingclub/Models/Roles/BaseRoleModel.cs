@@ -10,5 +10,9 @@ namespace Models.Roles {
         [StringLength(50, MinimumLength = 2)]
         [Required]
         public string Description { get; set; }
+
+        [StringLength(50, MinimumLength = 2)]
+        [Required]
+        public string Name { get; set; }
     }
 }

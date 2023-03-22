@@ -1,4 +1,5 @@
-﻿using Models.Results;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Results;
 using webapi.Entities;
 
 namespace webapi.Repositories {
@@ -9,30 +10,42 @@ namespace webapi.Repositories {
             _context = context;
         }
         public async Task<GetResultModel> GetResult(Guid raceid, Guid swimmerid) {
-            return (from r in _context.Results where r.RaceId == raceid && r.SwimmerId == swimmerid select new GetResultModel() {
-                CurrentPersonalBest = r.CurrentPersonalBest,
-                RaceResult = r.RaceResult,
-                SwimmerFirstName= r.Swimmer.FirstName,
-                SwimmerLastName = r.Swimmer.LastName,
-                Schedule = r.Race.Schedule,
-                SwimmingPoolName = r.Race.SwimmingPool.Name
-            }).FirstOrDefault();
-        }
-
-        public async Task<List<GetResultModel>> GetResults() {
-            return (from r in _context.Results select new GetResultModel() {
+            return await (from r in _context.Results where r.RaceId == raceid && r.SwimmerId == swimmerid select new GetResultModel() {
+                RaceId = r.RaceId,
+                SwimmerId = r.SwimmerId,
                 CurrentPersonalBest = r.CurrentPersonalBest,
                 RaceResult = r.RaceResult,
                 SwimmerFirstName = r.Swimmer.FirstName,
                 SwimmerLastName = r.Swimmer.LastName,
                 Schedule = r.Race.Schedule,
                 SwimmingPoolName = r.Race.SwimmingPool.Name
-            }).ToList();
+            }).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<GetResultModel>> GetResults() {
+            return await (from r in _context.Results select new GetResultModel() {
+                RaceId = r.RaceId,
+                SwimmerId = r.SwimmerId,
+                CurrentPersonalBest = r.CurrentPersonalBest,
+                RaceResult = r.RaceResult,
+                SwimmerFirstName = r.Swimmer.FirstName,
+                SwimmerLastName = r.Swimmer.LastName,
+                Schedule = r.Race.Schedule,
+                SwimmingPoolName = r.Race.SwimmingPool.Name
+            }).ToListAsync();
         }
 
         public async Task<GetResultModel> PostResult(PostResultModel postResultModel) {
-            GetResultModel result = new();
-            return result;
+            Result result = new Result {
+                SwimmerId = postResultModel.SwimmerId,
+                RaceId = postResultModel.RaceId,
+                CurrentPersonalBest = postResultModel.CurrentPersonalBest,
+                RaceResult = postResultModel.RaceResult,
+            };
+            _context.Results.Add(result);
+            await _context.SaveChangesAsync();
+
+            return await GetResult(postResultModel.RaceId, postResultModel.SwimmerId);
         }
     }
 }

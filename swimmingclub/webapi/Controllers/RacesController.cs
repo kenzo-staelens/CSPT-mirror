@@ -37,9 +37,14 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetRaceModel> PostRace(PostRaceModel Race) {
-            Guid Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostRace), new { id = Id }, Race);
+        public async Task<ActionResult<GetRaceModel>> PostRace(PostRaceModel Race) {
+            try {
+                var getModel = await _repo.PostRace(Race);
+                return CreatedAtAction(nameof(PostRace), new { id = getModel.Id }, getModel);
+            }
+            catch (Exception) {
+                return new BadRequestResult();
+            }
         }
     }
 }

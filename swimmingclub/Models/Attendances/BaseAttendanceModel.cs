@@ -10,12 +10,6 @@ using Models.Workouts;
 
 namespace Models.Attendances {
     public class BaseAttendanceModel {
-        public string SwimmerFirstName { get; set; }
-        public string SwimmerLastName { get; set; }
-
-        public DateTime Schedule { get; set; }
-        public string SwimmingPoolName { get; set; }
-
         [Required]
         public bool Present { get; set; }
 

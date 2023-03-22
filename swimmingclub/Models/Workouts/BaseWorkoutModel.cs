@@ -13,14 +13,6 @@ using System.Threading.Tasks;
 namespace Models.Workouts {
     public class BaseWorkoutModel {
         [Required]
-        public string CoachFirstName { get; set; }
-        [Required]
-        public string CoachLastName { get; set; }
-
-        [Required]
-        public string SwimmingPoolName { get; set; }
-
-        [Required]
         public DateTime Schedule { get; set; }
 
         [Required]

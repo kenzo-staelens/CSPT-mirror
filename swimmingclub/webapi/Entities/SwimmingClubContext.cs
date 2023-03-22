@@ -38,14 +38,14 @@ namespace webapi.Entities {
             builder.Entity<SwimmingPool>().HasKey(x => x.Id);
             builder.Entity<Workout>().HasKey(x => x.Id);
 
-            builder.Entity<Member>().HasMany(x => x.MemberRoles).WithOne(x=>x.Member).IsRequired().HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Role>().HasMany(x => x.MemberRoles).WithOne(x=>x.Role).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Member>().HasMany(x => x.MemberRoles).WithOne(x=>x.Member).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Role>().HasMany(x => x.MemberRoles).WithOne(x=>x.Role).IsRequired().HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Workout>().HasMany(x => x.Attendances).WithOne(x => x.Workout).IsRequired().HasForeignKey(x => x.SwimmerId).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Swimmer>().HasMany(x => x.Attendances).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.WorkoutId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Workout>().HasMany(x => x.Attendances).WithOne(x => x.Workout).IsRequired().HasForeignKey(x => x.WorkoutId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Swimmer>().HasMany(x => x.Attendances).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.SwimmerId).OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Swimmer>().HasMany(x => x.Results).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.RaceId);
-            builder.Entity<Race>().HasMany(x => x.Results).WithOne(x => x.Race).IsRequired().HasForeignKey(x => x.SwimmerId);
+            builder.Entity<Swimmer>().HasMany(x => x.Results).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.SwimmerId);
+            builder.Entity<Race>().HasMany(x => x.Results).WithOne(x => x.Race).IsRequired().HasForeignKey(x => x.RaceId);
 
             builder.Entity<SwimmingPool>().HasMany(x => x.Races);
             builder.Entity<SwimmingPool>().HasMany(x => x.Workouts);

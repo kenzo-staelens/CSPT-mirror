@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Models.Results;
 
 namespace Models.Races {
-    public class GetRaceResultModel : BaseRaceModel{
-        public List<GetResultModel> Results { get; set; }
+    public class GetRaceResultModel{
+        public String SwimmingPoolName { get; set; }
+        public List<RaceResultSubModel> Results { get; set; }
     }
 }

@@ -30,9 +30,14 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetResultModel> PostResult(PostResultModel Result) {
-            var Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostResult), new { id = Id }, Result);
+        public async Task<ActionResult<GetResultModel>> PostResult(PostResultModel result) {
+            try {
+                var getModel = await _repo.PostResult(result);
+                return CreatedAtAction(nameof(PostResult), new { raceid = getModel.RaceId, swimmerid = getModel.SwimmerId }, getModel);
+            }
+            catch (Exception) {
+                return new BadRequestResult();
+            }
         }
     }
 }

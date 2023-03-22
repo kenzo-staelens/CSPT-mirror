@@ -1,4 +1,5 @@
-﻿using Models.Races;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.Races;
 using Models.Results;
 using System.Diagnostics;
 using webapi.Entities;
@@ -12,51 +13,55 @@ namespace webapi.Repositories {
         }
 
         public async Task<GetRaceModel> GetRace(Guid id) {
-            return (from r in _context.Races where r.Id == id select new GetRaceModel() {
+            return await (from r in _context.Races where r.Id == id select new GetRaceModel() {
+                Id = r.Id,
                 Schedule = r.Schedule,
                 Stroke = r.Stroke,
                 AgeCategory = r.AgeCategory,
                 Distance = r.Distance,
-                Gender = r.Gender
-            }).FirstOrDefault();
-
-            
-            //return race;
+                Gender = r.Gender,
+                SwimmingPoolName = r.SwimmingPool.Name
+            }).FirstOrDefaultAsync();
         }
 
         public async Task<List<GetRaceModel>> GetRaces() {
-            return (from r in _context.Races select new GetRaceModel() {
+            return await(from r in _context.Races select new GetRaceModel() {
+                Id = r.Id,
                 Schedule = r.Schedule,
                 Stroke = r.Stroke,
                 AgeCategory = r.AgeCategory,
                 Distance = r.Distance,
-                Gender = r.Gender
-            }).ToList();
-            //return races;
+                Gender = r.Gender,
+                SwimmingPoolName = r.SwimmingPool.Name
+            }).ToListAsync();
         }
 
         public async Task<List<GetRaceResultModel>> GetRaceResults() {
-            return (from r in _context.Races where r.Schedule < DateTime.Now
+            return await (from r in _context.Races where r.Schedule < DateTime.Now
                     select new GetRaceResultModel() {
-                        Schedule = r.Schedule,
-                        Stroke = r.Stroke,
-                        AgeCategory = r.AgeCategory,
-                        Distance = r.Distance,
-                        Gender = r.Gender,
+                        SwimmingPoolName = r.SwimmingPool.Name,
                         Results = (from res in _context.Results where r.Results.Contains(res) select
-                            new GetResultModel {
-                                CurrentPersonalBest = res.CurrentPersonalBest,
+                            new RaceResultSubModel {
                                 RaceResult = res.RaceResult,
-                                SwimmerFirstName = res.Swimmer.FirstName,
-                                SwimmerLastName = res.Swimmer.LastName,
-                                Schedule = res.Race.Schedule,
-                                SwimmingPoolName = res.Race.SwimmingPool.Name
+                                SwimmerName = $"{res.Swimmer.FirstName} {res.Swimmer.LastName}",
                             }).ToList()
-                    }).ToList();
+                    }).ToListAsync();
         }
         public async Task<GetRaceModel> PostRace(PostRaceModel postRaceModel) {
-            GetRaceModel race = new();
-            return race;
+            Guid id = Guid.NewGuid();
+            Race race = new Race() {
+                Id = id,
+                AgeCategory = postRaceModel.AgeCategory,
+                Distance = postRaceModel.Distance,
+                Gender = postRaceModel.Gender,
+                Schedule = postRaceModel.Schedule,
+                Stroke = postRaceModel.Stroke,
+                SwimmingPoolId = postRaceModel.SwimmingPoolId
+            };
+            _context.Races.Add(race);
+            await _context.SaveChangesAsync();
+
+            return await GetRace(id);
         }
     }
 }

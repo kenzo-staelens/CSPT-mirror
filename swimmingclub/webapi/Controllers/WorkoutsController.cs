@@ -27,12 +27,23 @@ namespace webapi.Controllers {
             return workout == null?new StatusCodeResult(StatusCodes.Status404NotFound):workout;
         }
 
+        [HttpGet("absences")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<List<GetWorkoutAbsencesModel>>> GetWorkoutAbsences() {
+            return await _repo.GetWorkoutAbsences();
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetWorkoutModel> PostWorkout(PostWorkoutModel Workout) {
-            var Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostWorkout), new { id = Id }, Workout);
+        public async Task<ActionResult<GetWorkoutModel>> PostWorkout(PostWorkoutModel workout) {
+            try {
+                var getModel = await _repo.PostWorkout(workout);
+                return CreatedAtAction(nameof(PostWorkout), new { id = getModel.Id }, getModel);
+            }
+            catch (Exception) {
+                return new BadRequestResult();
+            }
         }
     }
 }

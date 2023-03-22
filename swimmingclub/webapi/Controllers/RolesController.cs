@@ -30,9 +30,14 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetRoleModel> PostRole(PostRoleModel Role) {
-            Guid Id = new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostRole), new { id = Id }, Role);
+        public async Task<ActionResult<GetRoleModel>> PostRole(PostRoleModel role) {
+            try {
+                var getModel = await _repo.PostRole(role);
+                return CreatedAtAction(nameof(PostRole), new { id = getModel.Id }, getModel);
+            }
+            catch (Exception) {
+                return new BadRequestResult();
+            }
         }
     }
 }

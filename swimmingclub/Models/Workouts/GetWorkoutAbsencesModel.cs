@@ -6,7 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Models.Workouts {
-    public class GetWorkoutAbsencesModel : BaseWorkoutModel{
-        public List<GetAttendanceModel> Absences { get; set; }
+    public class GetWorkoutAbsencesModel{
+        public DateTime Schedule { get; set; }
+        public string CoachFirstName { get; set; }
+        public string CoachLastName { get; set; }
+        public List<string> SwimmerNames { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Coaches;
+using webapi.Entities;
 using webapi.Repositories;
 
 namespace webapi.Controllers {
@@ -30,9 +31,14 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<GetCoachModel> PostCoach(PostCoachModel coach) {
-            var Id=new Guid("12345678-1234-1234-1234-1234567890ab");
-            return CreatedAtAction(nameof(PostCoach), new{ id = Id}, coach);
+        public async Task<ActionResult<GetCoachModel>> PostCoach(PostCoachModel coach) {
+            try {
+                var getModel = await _repo.PostCoach(coach);
+                return CreatedAtAction(nameof(PostCoach), new { id = getModel.Id }, getModel);
+            }
+            catch (Exception) {
+                return new BadRequestResult();
+            }
         }
     }
 }

@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Models.Races {
-    public class GetRaceModel : BaseRaceModel{
-        public Guid Id { get; set; }
-        public string SwimmingPoolName { get; set; }
+    public class RaceResultSubModel {
+        public string SwimmerName { get; set; }
+        public string RaceResult { get; set; }
     }
 }
