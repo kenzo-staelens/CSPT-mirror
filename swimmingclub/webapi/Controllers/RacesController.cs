@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Races;
 using webapi.Repositories;
 
 namespace webapi.Controllers {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class RacesController : ControllerBase {
 
@@ -16,6 +18,7 @@ namespace webapi.Controllers {
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [AllowAnonymous]
         public async Task<ActionResult<List<GetRaceModel>>> GetRace() {
             return await _repo.GetRaces();
         }
@@ -23,6 +26,7 @@ namespace webapi.Controllers {
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public async Task<ActionResult<GetRaceModel>> GetRace(Guid id) {
             GetRaceModel race = await _repo.GetRace(id);
             return race == null ? new StatusCodeResult(StatusCodes.Status404NotFound) : race;
@@ -30,6 +34,7 @@ namespace webapi.Controllers {
 
         [HttpGet("results")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize("Beheerder,Coach")]
         public async Task<ActionResult<List<GetRaceResultModel>>> GetRaceResults() {
             return await _repo.GetRaceResults();
         }
@@ -37,6 +42,7 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize("Beheerder")]
         public async Task<ActionResult<GetRaceModel>> PostRace(PostRaceModel Race) {
             try {
                 var getModel = await _repo.PostRace(Race);

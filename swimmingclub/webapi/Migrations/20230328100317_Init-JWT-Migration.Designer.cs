@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using webapi.Entities;
 
@@ -11,9 +12,11 @@ using webapi.Entities;
 namespace webapi.Migrations
 {
     [DbContext(typeof(SwimmingClubContext))]
-    partial class SwimmingClubContextModelSnapshot : ModelSnapshot
+    [Migration("20230328100317_Init-JWT-Migration")]
+    partial class InitJWTMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,9 +237,19 @@ namespace webapi.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId1")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("UserId", "RoleId");
 
+                    b.HasIndex("MemberId");
+
                     b.HasIndex("RoleId");
+
+                    b.HasIndex("RoleId1");
 
                     b.ToTable("AspNetUserRoles", (string)null);
                 });
@@ -292,12 +305,14 @@ namespace webapi.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ReplacedByToken")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Revoked")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RevokedByIp")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Token")
@@ -509,14 +524,26 @@ namespace webapi.Migrations
 
             modelBuilder.Entity("webapi.Entities.MemberRole", b =>
                 {
-                    b.HasOne("webapi.Entities.Role", "Role")
+                    b.HasOne("webapi.Entities.Member", "Member")
                         .WithMany("MemberRoles")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("webapi.Entities.Role", null)
+                        .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("webapi.Entities.Member", "Member")
+                    b.HasOne("webapi.Entities.Role", "Role")
                         .WithMany("MemberRoles")
+                        .HasForeignKey("RoleId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("webapi.Entities.Member", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

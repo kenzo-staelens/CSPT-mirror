@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Models.Coaches;
 using webapi.Entities;
@@ -6,6 +8,7 @@ using webapi.Repositories;
 
 namespace webapi.Controllers {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class CoachesController : ControllerBase {
         private readonly ICoachRepository _repo;
@@ -29,8 +32,9 @@ namespace webapi.Controllers {
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [AllowAnonymous]
         public async Task<ActionResult<GetCoachModel>> PostCoach(PostCoachModel coach) {
             try {
                 var getModel = await _repo.PostCoach(coach);
@@ -38,6 +42,20 @@ namespace webapi.Controllers {
             }
             catch (Exception) {
                 return new BadRequestResult();
+            }
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize("Beheerder")]
+        public async Task<ActionResult<GetCoachModel>> PutCoach(PutCoachModel coach) {
+            try {
+                var getModel = await _repo.PutCoach(coach);
+                return Ok(getModel);
+            }
+            catch (Exception e) {
+                return BadRequest(e);
             }
         }
     }

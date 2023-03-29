@@ -5,5 +5,6 @@ namespace webapi.Repositories {
         Task<List<GetCoachModel>> GetCoaches();
         Task<GetCoachModel> GetCoach(Guid id);
         Task<GetCoachModel> PostCoach(PostCoachModel postCoachModel);
+        Task<GetCoachModel> PutCoach(PutCoachModel putCoachModel);
     }
 }

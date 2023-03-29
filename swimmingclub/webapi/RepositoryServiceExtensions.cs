@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using webapi.Repositories;
+using webapi.Helper;
 
 namespace Extensions {
     public static class RepositoryServiceExtensions {
@@ -18,6 +19,7 @@ namespace Extensions {
             services.AddTransient<ISwimmerRepository, SwimmerRepository>();
             services.AddTransient<ISwimmingPoolRepository, SwimmingPoolRepository>();
             services.AddTransient<IWorkoutRepository, WorkoutRepository>();
+            services.AddTransient<IPersoonRepository, PersoonRepository>();
 
             return services;
         }

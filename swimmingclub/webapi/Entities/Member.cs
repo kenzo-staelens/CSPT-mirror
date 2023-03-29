@@ -21,5 +21,7 @@ namespace webapi.Entities {
         public Gender Gender { get; set; }
 
         public virtual ICollection<MemberRole> MemberRoles { get; set; }
+
+        public virtual ICollection<RefreshToken> RefreshTokens { get; set; }
     }
 }

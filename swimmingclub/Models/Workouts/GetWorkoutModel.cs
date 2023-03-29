@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models.Workouts {
     public class GetWorkoutModel : BaseWorkoutModel {
+        public Guid CoachId { get; set; }
         public string CoachFirstName { get; set; }
         public string CoachLastName { get; set; }
         public string SwimmingPoolName { get; set; }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Attendances;
 using Models.Coaches;
@@ -6,6 +7,7 @@ using webapi.Repositories;
 
 namespace webapi.Controllers {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class AttendancesController : ControllerBase {
         private readonly IAttendanceRepository _repo;
@@ -16,6 +18,7 @@ namespace webapi.Controllers {
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Authorize("Beheerder")]
         public async Task<ActionResult<List<GetAttendanceModel>>> GetAttendance() {
             return await _repo.GetAttendances();
         }
@@ -23,6 +26,7 @@ namespace webapi.Controllers {
         [HttpGet("{swimmerid}/{workoutid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Authorize("Beheerder")]
         public async Task<ActionResult<GetAttendanceModel>> GetAttendance(Guid swimmerid, Guid workoutid) {
             GetAttendanceModel attendance = await _repo.GetAttendance(swimmerid, workoutid);
             return attendance==null?new StatusCodeResult(StatusCodes.Status404NotFound): attendance;
@@ -31,6 +35,7 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize("Beheerder")]
         public async Task<ActionResult<GetAttendanceModel>> PostAttendance(PostAttendanceModel attendance) {
             try {
                 var getModel = await _repo.PostAttendance(attendance);

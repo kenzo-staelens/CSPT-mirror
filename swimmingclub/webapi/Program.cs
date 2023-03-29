@@ -1,6 +1,10 @@
 using Extensions;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using webapi.Entities;
+using webapi.Helper;
 
 namespace webapi {
     public class Program {
@@ -22,6 +26,30 @@ namespace webapi {
                 options => options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_ "
             ).AddEntityFrameworkStores<SwimmingClubContext>();
 
+            // authentication configs
+            var appSettingsConfig = builder.Configuration.GetSection("AppSettings");
+            builder.Services.Configure<AppSettings>(appSettingsConfig);
+
+            var appSettings = appSettingsConfig.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
+            builder.Services.AddAuthentication(x => {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x => {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+            // repositories
             builder.Services.AddRepositoryServices(builder.Configuration);
 
             var app = builder.Build();
@@ -35,7 +63,7 @@ namespace webapi {
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
+            app.UseAuthentication();
 
             app.MapControllers();
 

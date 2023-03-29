@@ -1,16 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.Results;
+using System.Security.Claims;
 using webapi.Repositories;
 
 namespace webapi.Controllers {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [ApiController]
     public class ResultsController : ControllerBase {
         private readonly IResultRepository _repo;
+        private readonly ClaimsPrincipal _user;
 
-        public ResultsController(IResultRepository repo) {
+        public ResultsController(IResultRepository repo, IHttpContextAccessor httpContextAccessor) {
             _repo = repo;
+            _user = httpContextAccessor.HttpContext.User;
         }
 
         [HttpGet]
@@ -23,6 +28,9 @@ namespace webapi.Controllers {
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<GetResultModel>> GetResult(Guid raceid, Guid swimmerid) {
+            if (!_user.IsInRole("Coach") && !_user.IsInRole("Beheerder") && _user.Identity.Name != swimmerid.ToString()) {
+                return StatusCode(403);
+            }
             GetResultModel result =  await _repo.GetResult(raceid,swimmerid);
             return result==null?new StatusCodeResult(StatusCodes.Status404NotFound):result;
         }
@@ -30,6 +38,7 @@ namespace webapi.Controllers {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [Authorize("Beheerder")]
         public async Task<ActionResult<GetResultModel>> PostResult(PostResultModel result) {
             try {
                 var getModel = await _repo.PostResult(result);

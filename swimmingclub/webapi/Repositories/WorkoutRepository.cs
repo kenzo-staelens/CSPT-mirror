@@ -16,6 +16,7 @@ namespace webapi.Repositories {
         public async Task<GetWorkoutModel> GetWorkout(Guid id) {
             return await (from r in _context.Workouts where r.Id == id select new GetWorkoutModel() {
                 Id=r.Id,
+                CoachId = r.Coach.Id,
                 SwimmingPoolName = r.SwimmingPool.Name,
                 Schedule = r.Schedule,
                 Duration = r.Duration,
@@ -28,6 +29,7 @@ namespace webapi.Repositories {
         public async Task<List<GetWorkoutModel>> GetWorkouts() {
             return await (from r in _context.Workouts select new GetWorkoutModel() {
                 Id=r.Id,
+                CoachId = r.Coach.Id,
                 SwimmingPoolName = r.SwimmingPool.Name,
                 Schedule = r.Schedule,
                 Duration = r.Duration,

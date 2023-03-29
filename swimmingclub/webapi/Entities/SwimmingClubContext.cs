@@ -18,6 +18,8 @@ namespace webapi.Entities {
 
         public DbSet<Swimmer> Swimmers { get; set; }
         public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Member> members { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Attendance> Attendances { get; set; }
         public DbSet<Workout> Workouts { get; set; }
         public DbSet<Race> Races { get; set; }
@@ -32,14 +34,15 @@ namespace webapi.Entities {
         }*/
 
         protected override void OnModelCreating(ModelBuilder builder) {
+            base.OnModelCreating(builder);
             builder.Entity<Attendance>().HasKey(x => new { x.SwimmerId, x.WorkoutId });
             builder.Entity<Result>().HasKey(x => new { x.SwimmerId, x.RaceId});
             builder.Entity<Race>().HasKey(x => x.Id);
             builder.Entity<SwimmingPool>().HasKey(x => x.Id);
             builder.Entity<Workout>().HasKey(x => x.Id);
 
-            builder.Entity<Member>().HasMany(x => x.MemberRoles).WithOne(x=>x.Member).IsRequired().HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
-            builder.Entity<Role>().HasMany(x => x.MemberRoles).WithOne(x=>x.Role).IsRequired().HasForeignKey(x => x.RoleId).OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Member>().HasMany(x => x.MemberRoles).WithOne(x=>x.Member).HasForeignKey(x => x.UserId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            builder.Entity<Role>().HasMany(x => x.MemberRoles).WithOne(x=>x.Role).HasForeignKey(x => x.RoleId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Workout>().HasMany(x => x.Attendances).WithOne(x => x.Workout).IsRequired().HasForeignKey(x => x.WorkoutId).OnDelete(DeleteBehavior.Restrict);
             builder.Entity<Swimmer>().HasMany(x => x.Attendances).WithOne(x => x.Swimmer).IsRequired().HasForeignKey(x => x.SwimmerId).OnDelete(DeleteBehavior.Restrict);
@@ -53,7 +56,7 @@ namespace webapi.Entities {
 
             builder.Entity<SwimmingPool>().HasIndex(x => x.Name).IsUnique();
 
-            base.OnModelCreating(builder);
+            builder.Entity<RefreshToken>().HasOne(x => x.Member).WithMany(x => x.RefreshTokens).HasForeignKey(x => x.MemberId).IsRequired();
         }
     }
 }
